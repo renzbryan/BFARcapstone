@@ -78,9 +78,6 @@
             <label for="quantity">Quantity:</label>
             <input type="text" name="quantity" id="quantity" value="{{ $iars->quantity }}"/>
 
-            <label for="forms">Forms:</label>
-            <input type="text" name="forms" id="forms" value="{{ $iars->forms }}"/>
-
             <button type="submit">Update</button>
             <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
         </form>

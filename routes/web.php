@@ -48,6 +48,9 @@ Route::middleware('auth')->group(function () {
         'iar' => IarController::class,
     ]);
 
+    Route::get('archive-iar', [IarController::class, 'archive']);
+    Route::get('/restore-iar/{id}', [IarController::class, 'restore']);
+
 });
 
 

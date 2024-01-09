@@ -55,7 +55,7 @@ class IarController extends Controller
 
     public function archive(){
         $iars = Iar::withTrashed()
-        ->where('tbl_iar.deleted_at', '!=', null)->get();
+        ->where('iar_tbl.deleted_at', '!=', null)->get();
         return view('admin.iar.archive-iar', compact('iars'));
     }
 

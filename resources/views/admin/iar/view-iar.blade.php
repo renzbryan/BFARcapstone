@@ -7,8 +7,26 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0px;
             position: relative;
+        }
+
+        header {
+            background-color: #00005E;
+            height: 75px;
+            padding: 10px;
+        }
+
+        .archive-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
         table {
@@ -76,12 +94,47 @@
             padding: 10px;
             text-align: center;
         }
+
+        /* Footer Styles */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            background-color: #ddd;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        /* Dropdown Styles */
+        .status-dropdown {
+            margin-right: 10px;
+        }
+
+        /* Transfer Button Styles */
+        .transfer-button {
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .transfer-button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
+
 <body>
 
+<header>
     <a type="button" class="add-item-btn" href="{{ route('iar.create') }}">Add Item</a>
+    <a class="archive-btn" href="archive-iar">Archive</a>
+</header>
 
+<div class="form_iar">
     <table>
         <thead>
             <tr>
@@ -111,5 +164,17 @@
             @endforeach
         </tbody>
     </table>
+</div>
+    
+<!-- Footer -->
+<footer>
+    <select class="status-dropdown" name="status">
+        <option value="stock">Stock Card</option>
+        <option value="property">Property Card</option>
+        <option value="semi-property">Semi-property Card</option>
+    </select>
+    <button class="transfer-button">Transfer</button>
+</footer>
+
 </body>
 </html>
