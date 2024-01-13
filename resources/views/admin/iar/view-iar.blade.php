@@ -1,180 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory Table</title>
+    <title>Modern IAR Forms</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0px;
-            position: relative;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        nav {
+            background-color: #29487d;
+            padding: 15px;
+            margin-bottom: 20px;
+            height: 100px;
+            display: flex;
+            justify-content: flex-end;
         }
 
-        header {
-            background-color: #00005E;
-            height: 75px;
-            padding: 10px;
-        }
-
-        .archive-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 70px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        .delete-btn, .edit-btn {
-            padding: 5px 10px;
-            border-radius: 5px;
+        nav a {
+            color: #ffffff;
+            margin: 25px;
             text-decoration: none;
-            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+            float: right;
         }
 
-        .delete-btn {
-            background-color: #e74c3c;
-            color: white;
-        }
-
-        .delete-btn:hover {
-            background-color: #c0392b;
-        }
-
-        .edit-btn {
-            background-color: #3498db;
-            color: white;
-        }
-
-        .edit-btn:hover {
-            background-color: #2980b9;
+        nav a:hover {
+            color: #0056b3;
+            text-decoration: none;
         }
 
         .add-item-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 10px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            color: #eeffff;
+            margin: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            background-color: #29487d;
+            padding: 15px;
+            transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width:150px;
+        }
+
+        .container{
+            margin-top:125px;
         }
 
         .add-item-btn:hover {
-            background-color: #2980b9;
+            color: #eeffff;
+            background-color: #4267b2;
+            text-decoration: none;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        .checkbox-column {
-            padding: 10px;
-            text-align: center;
-        }
-
-        /* Footer Styles */
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 100px;
-            background-color: #ddd;
-            line-height: 50px;
-            text-align: center;
-        }
-
-        /* Dropdown Styles */
-        .status-dropdown {
-            margin-right: 10px;
-        }
-
-        /* Transfer Button Styles */
-        .transfer-button {
-            padding: 10px;
-            background-color: #3498db;
-            color: white;
+        /* Updated card styles */
+        .card {
+            margin-bottom: 20px;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
-        .transfer-button:hover {
-            background-color: #2980b9;
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: scale(1.025);
+        }
+
+        .card-header {
+            background-color: #343a40;
+            color: #ffffff;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-text1{
+            font-size:25px;
+        }
+
+        /* Updated button styles */
+        .btn {
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            background-color: #3a5998;
+            border-color: #3a5998;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-success {
+            background-color: #67b868;
+            border-color: #67b868;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: #ff5ca1;
+            border-color: #ff5ca1;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #c82333;
         }
     </style>
 </head>
 
 <body>
+    <nav class="fixed-top">
+        <a href="#">Dashboard</a>
+        <a href="#">IAR Forms</a>
+        <a href="#">Profile</a>
+        <a href="#">Settings</a>
+        <a href="#">Log Out</a>
+    </nav>
+    <a class="add-item-btn fixed-bottom" href="{{ route('iar.create') }}">New IAR Form</a>
 
-<header>
-    <a type="button" class="add-item-btn" href="{{ route('iar.create') }}">Add Item</a>
-    <a class="archive-btn" href="archive-iar">Archive</a>
-</header>
+    <div class="container">
+        @php
+        $reversedIars = array_reverse($iars->toArray());
+        @endphp
+        @foreach($reversedIars as $data)
+        <div class="card">
+            <div class="card-header">
+                IAR Form #{{ $data['iar_number'] }}
+            </div>
+            <div class="card-body">
+                <p class="card-text1"><strong>{{ $data['iar_entityname'] }}</strong> </p>
+                <p class="card-text"><strong>Fund Cluster:</strong> {{ $data['iar_fundcluster'] }}</p>
+                <p class="card-text"><strong>Supplier:</strong> {{ $data['iar_supplier'] }}</p>
 
-<div class="form_iar">
-    <table>
-        <thead>
-            <tr>
-                <th>Select</th>
-                <th>Item Name</th>
-                <th>Description</th>
-                <th>Unit</th>
-                <th>Quantity</th>
-                <th>Forms</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($iars as $data)
-                <tr>
-                    <td class="checkbox-column"><input type="checkbox" name="selected_items[]" value="{{ $data->id }}"></td>
-                    <td>{{ $data->item_name }}</td>
-                    <td>{{ $data->description }}</td>
-                    <td>{{ $data->unit }}</td>
-                    <td>{{ $data->quantity }}</td>
-                    <td>{{ $data->forms }}</td>
-                    <td class="action-column">
-                        <a class="edit-btn" href="{{ route('iar.edit', $data->id) }}">Edit</a>
-                        <a class="delete-btn" href="{{ route('iar.destroy', $data->id) }}">Delete</a>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-    
-<!-- Footer -->
-<footer>
-    <select class="status-dropdown" name="status">
-        <option value="stock">Stock Card</option>
-        <option value="property">Property Card</option>
-        <option value="semi-property">Semi-property Card</option>
-    </select>
-    <button class="transfer-button">Transfer</button>
-</footer>
-
+                <div class="action-column">
+                    <a class="btn btn-primary" href="{{ route('item.show', $data['iar_id']) }}">View</a>
+                    <a class="btn btn-success" href="#">Print</a>
+                    <a class="btn btn-danger" href="#">Delete</a>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
 </body>
+
 </html>

@@ -1,11 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\IarController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\ItemsController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,45 +11,42 @@ use Inertia\Inertia;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // Route::get('view-inventory', [InventoryController::class, 'index']);
-    // Route::get('create-inventory', [InventoryController::class, 'create']);
-    // Route::post('/store-inventory', [InventoryController::class, 'store']);
-    // Route::get('edit-inventory/{inventory_id}', [InventoryController::class, 'edit']);
-    // Route::put('update-inventory/{inventory_id}', [InventoryController::class, 'update'])->name('update-inventory');
-    // Route::get('/delete-inventory/{inventory_id}', [InventoryController::class, 'delete']);
-    // Route::get('archive-inventory', [InventoryController::class, 'archive']);
-    // Route::get('/restore-inventory/{inventory_id}', [InventoryController::class, 'restore']);
-
-    Route::resources([
-        'iar' => IarController::class,
-    ]);
-
-    Route::get('archive-iar', [IarController::class, 'archive']);
-    Route::get('/restore-iar/{id}', [IarController::class, 'restore']);
-
 });
+
+
+Route::resources([
+    'iar' => IarController::class,
+]);
+
+Route::resources([
+    'item' => ItemsController::class,
+]);
+
+Route::get('/iar/{iar_id}/create-items', [ItemsController::class, 'addItemForm'])->name('items.create');
+Route::post('/iar/{iar_id}/create-items', [ItemsController::class, 'store'])->name('item.store');
+Route::get('/iar/{iar_id}/view-items', [ItemsController::class, 'index'])->name('items.index');
+
+
+Route::get('/items', 'ItemsController@index')->name('items.index');
+
+
 
 
 
