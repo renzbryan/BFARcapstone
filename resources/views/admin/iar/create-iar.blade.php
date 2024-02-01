@@ -103,6 +103,12 @@
                     <label for="iar_rod">Requisitioning Office/Dept.:</label>
                     <input type="text" name="iar_rod" id="iar_rod" required>
                 </div>
+
+                <div>
+                    <button type="submit">Save</button>
+                    <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
+                </div>
+
             </div>
         
             <div class="grid-item" style="width: 100%">
@@ -131,10 +137,6 @@
                     <input type="date" name="iar_invoice_d" id="iar_invoice_d" required>
                 </div>
 
-                <div>
-                    <button type="submit">Save</button>
-                    <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
-                </div>
             </div>
 
             </div>

@@ -40,15 +40,18 @@
 
         .add-item-btn {
             color: #eeffff;
-            margin: 25px;
+            margin: 70px;
             text-decoration: none;
             font-weight: bold;
+            font-size:40px;
             background-color: #29487d;
-            padding: 15px;
+            padding-top: 8px;
+            padding-left: 23px;
             transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            border-radius: 10px;
+            border-radius: 50px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width:150px;
+            height:70px;
+            width:70px;
         }
 
         .container{
@@ -135,7 +138,7 @@
         <a href="#">Settings</a>
         <a href="#">Log Out</a>
     </nav>
-    <a class="add-item-btn fixed-bottom" href="{{ route('iar.create') }}">New IAR Form</a>
+    <a class="add-item-btn fixed-bottom" href="{{ route('iar.create') }}">+</a>
 
     <div class="container">
         @php
