@@ -42,7 +42,7 @@ Route::resources([
 Route::get('/iar/{iar_id}/create-items', [ItemsController::class, 'addItemForm'])->name('items.create');
 Route::post('/iar/{iar_id}/create-items', [ItemsController::class, 'store'])->name('item.store');
 Route::get('/iar/{iar_id}/view-items', [ItemsController::class, 'index'])->name('items.index');
-
+Route::get('/iar/{iar_id}', [ItemsController::class, 'downloadExcel'])->name('export.excel');
 
 Route::get('/items', 'ItemsController@index')->name('items.index');
 

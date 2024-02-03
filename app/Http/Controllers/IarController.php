@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Iar;
+use App\Exports\ExportExc;
 
 class IarController extends Controller
 {
@@ -32,5 +33,12 @@ class IarController extends Controller
         ]);
         Iar::create($request->all());
             return redirect('iar')->with('success', 'SUCCESSFULLY ADDED');
+    }
+
+    public function downloadExcel($id)
+    {
+        $rowID=Iar::find($id);
+        $export = new ExportExc($rowID);
+        return $export->export();
     }
 }

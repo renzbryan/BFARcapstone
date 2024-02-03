@@ -156,7 +156,7 @@
 
                 <div class="action-column">
                     <a class="btn btn-primary" href="{{ route('item.show', $data['iar_id']) }}">View</a>
-                    <a class="btn btn-success" href="#">Print</a>
+                    <a class="btn btn-success" href="iar/{{$data['iar_id']}}">Print</a>
                     <a class="btn btn-danger" href="#">Delete</a>
                 </div>
             </div>
