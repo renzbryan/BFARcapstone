@@ -82,7 +82,7 @@
 <body>
 <section>
     <div class="container">
-    <form action="{{ route('item.store', ['iar_id' => $iar_id]) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('items.store', ['iar_id' => $iar_id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div >
                 <div>

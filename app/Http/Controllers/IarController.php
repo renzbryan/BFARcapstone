@@ -37,8 +37,9 @@ class IarController extends Controller
 
     public function downloadExcel($id)
     {
-        $rowID=Iar::find($id);
-        $export = new ExportExc($rowID);
-        return $export->export();
+            $rowID = Iar::find($id);
+            $export = new ExportExc($rowID->iar_id);
+            return $export->export();
     }
+    
 }
