@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restored Items</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,39 +58,108 @@
         .restore-btn:hover {
             background-color: #219e56;
         }
+        .container{
+            margin-top:125px;
+        }
+
+        .add-item-btn:hover {
+            color: #eeffff;
+            background-color: #4267b2;
+            text-decoration: none;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Updated card styles */
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: scale(1.025);
+        }
+
+        .card-header {
+            background-color: #343a40;
+            color: #ffffff;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-text1{
+            font-size:25px;
+        }
+
+        /* Updated button styles */
+        .btn {
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            background-color: #3a5998;
+            border-color: #3a5998;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-success {
+            background-color: #67b868;
+            border-color: #67b868;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: #ff5ca1;
+            border-color: #ff5ca1;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+        }
     </style>
 </head>
 <body>
     <a class="back-btn" href="iar">Back</a>
     <section>
-        <table>
-            <thead>
-                <tr>
-                    <th>Select</th>
-                    <th>Item Name</th>
-                    <th>Description</th>
-                    <th>Unit</th>
-                    <th>Quantity</th>
-                    <th>Forms</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($iars as $data)
-                <tr>
-                    <td class="checkbox-column"><input type="checkbox" name="selected_items[]" value="{{ $data->id }}"></td>
-                    <td>{{ $data->item_name }}</td>
-                    <td>{{ $data->description }}</td>
-                    <td>{{ $data->unit }}</td>
-                    <td>{{ $data->quantity }}</td>
-                    <td>{{ $data->forms }}</td>
-                    <td class="action-column">
-                        <a class="restore-btn" href="/restore-iar/{{ $data->id }}">Restore</a>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="container">
+            @php
+            $reversedIars = array_reverse($softDeletedItem->toArray());
+            @endphp
+            @foreach($reversedIars as $data)
+            <div class="card">
+                <div class="card-header">
+                    IAR Form #{{ $data['iar_number'] }}
+                </div>
+                <div class="card-body">
+                    <p class="card-text1"><strong>{{ $data['iar_entityname'] }}</strong> </p>
+                    <p class="card-text"><strong>Fund Cluster:</strong> {{ $data['iar_fundcluster'] }}</p>
+                    <p class="card-text"><strong>Supplier:</strong> {{ $data['iar_supplier'] }}</p>
+    
+                    <div class="action-column">
+                        <a class="btn btn-primary" href="{{ route('archive.item', $data['iar_id']) }}">View</a>
+                        <a class="btn btn-success" href="{{ route('restore.iar', ['iar_id' => $data['iar_id']]) }}">Restore</a>
+    
+                        <a class="btn btn-danger" href="{{ route('delete.iar', ['iar_id' => $data['iar_id']]) }}">Delete</a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
     </section>
 </body>
 </html>

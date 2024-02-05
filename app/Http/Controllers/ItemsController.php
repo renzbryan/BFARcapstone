@@ -61,5 +61,20 @@ class ItemsController extends Controller
         $iar = IAR::find($iar_id);
         return view('admin.item.create-items', ['iar' => $iar, 'iar_id' => $iar_id]);
     }
+
+    public function showArchived($iar_id)
+{
+    $iars = Iar::where('iar_tbl.iar_id', '=', $iar_id)->onlyTrashed()->get();
+
+    // Retrieve only the trashed items for the specified Iar
+    $trashedItems = Item::leftJoin('iar_tbl', 'items_tbl.iar_id', '=', 'iar_tbl.iar_id')
+        ->select('items_tbl.*', 'iar_tbl.*')
+        ->where('iar_tbl.iar_id', '=', $iar_id)
+        ->onlyTrashed()  // Include only trashed items
+        ->get();
+
+    return view('admin.item.archived-item', compact('trashedItems', 'iars'));
+}
+
     
 }

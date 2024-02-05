@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Iar;
 use App\Exports\ExportExc;
+use App\Models\Item;
 
 class IarController extends Controller
 {
@@ -41,5 +42,23 @@ class IarController extends Controller
             $export = new ExportExc($rowID->iar_id);
             return $export->export();
     }
-    
+
+    public function deleteIar($iar_id){
+    $iar = Iar::find($iar_id);
+    $iar->items()->delete();
+    $iar->delete();
+    return redirect('iar')->with('success', 'Iar and related items deleted successfully.');
+    }
+
+    public function archiveIar(){
+        $softDeletedItem = Iar::onlyTrashed()->get();
+        return view('admin.iar.archive-iar', compact('softDeletedItem'));
+    }
+
+    public function restoreIar($iar_id)
+    {
+        Iar::withTrashed()->where('iar_id', $iar_id)->restore();
+        Item::where('iar_id', $iar_id)->withTrashed()->restore();
+        return redirect('iar')->with('success', 'Iar and associated items restored successfully.');
+    }
 }

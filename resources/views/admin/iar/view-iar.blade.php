@@ -134,6 +134,7 @@
     <nav class="fixed-top">
         <a href="#">Dashboard</a>
         <a href="#">IAR Forms</a>
+        <a href="{{ route('archive.iar') }}">Archived IAR Forms</a>
         <a href="#">Profile</a>
         <a href="#">Settings</a>
         <a href="#">Log Out</a>
@@ -158,7 +159,7 @@
                     <a class="btn btn-primary" href="{{ route('item.show', $data['iar_id']) }}">View</a>
                     <a class="btn btn-success" href="{{ route('export.excel', ['iar_id' => $data['iar_id']]) }}">Print</a>
 
-                    <a class="btn btn-danger" href="#">Delete</a>
+                    <a class="btn btn-danger" href="{{ route('delete.iar', ['iar_id' => $data['iar_id']]) }}">Delete</a>
                 </div>
             </div>
         </div>

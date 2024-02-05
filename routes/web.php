@@ -46,9 +46,12 @@ Route::get('/iar/{iar_id}/view-items', [ItemsController::class, 'index'])->name(
 
 Route::get('/test/printexcel/{iar_id}', [IarController::class, 'downloadExcel'])->name('export.excel');
 
+Route::get('/iar/delete/{iar_id}', [IarController::class, 'deleteIar'])->name('delete.iar');
 
-
-
+//archive
+Route::get('/archived/iar', [IarController::class, 'archiveIar'])->name('archive.iar');
+Route::get('/archived/{iar_id}/iar/restore', [IarController::class, 'restoreIar'])->name('restore.iar');
+Route::get('/archived/{iar_id}/item', [ItemsController::class, 'showArchived'])->name('archive.item');
 
 
 
