@@ -3,7 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\IarController;
 use App\Http\Controllers\ItemsController;
+use App\Http\Controllers\WorkerAcc;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileSending;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +33,11 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::resources([
-    'iar' => IarController::class,
-]);
+Route::middleware(['auth'])->group(function () {
+    Route::resources([
+        'iar' => IarController::class,
+    ]);
+});
 
 Route::resources([
     'item' => ItemsController::class,
@@ -43,7 +47,8 @@ Route::get('/iar/{iar_id}/create-items', [ItemsController::class, 'addItemForm']
 Route::post('/iar/{iar_id}/create-items', [ItemsController::class, 'store'])->name('items.store');
 Route::get('/iar/{iar_id}/view-items', [ItemsController::class, 'index'])->name('items.index');
 
-
+Route::get('/worker', [WorkerAcc::class, 'index']);
+Route::any('worker/register', [WorkerAcc::class, 'register'])->name('register');
 Route::get('/test/printexcel/{iar_id}', [IarController::class, 'downloadExcel'])->name('export.excel');
 
 Route::get('/iar/delete/{iar_id}', [IarController::class, 'deleteIar'])->name('delete.iar');
@@ -54,5 +59,12 @@ Route::get('/archived/{iar_id}/iar/restore', [IarController::class, 'restoreIar'
 Route::get('/archived/{iar_id}/item', [ItemsController::class, 'showArchived'])->name('archive.item');
 
 
+
+//logout
+Route::any('/logout', [WorkerAcc::class, 'logout'])->name('logout');
+
+//file upload
+Route::get('/upload', [FileSending::class, 'showUploadForm']);
+Route::post('/upload', [FileSending::class, 'upload']);
 
 require __DIR__.'/auth.php';

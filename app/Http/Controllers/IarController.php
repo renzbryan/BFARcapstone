@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Iar;
 use App\Exports\ExportExc;
 use App\Models\Item;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\YourExportClass;
+use App\Imports\ExcelImport;
+
 
 class IarController extends Controller
 {
@@ -36,11 +40,26 @@ class IarController extends Controller
             return redirect('iar')->with('success', 'SUCCESSFULLY ADDED');
     }
 
+
     public function downloadExcel($id)
     {
             $rowID = Iar::find($id);
             $export = new ExportExc($rowID->iar_id);
             return $export->export();
+    }
+
+
+    public function updateExcel(Request $request)
+    {
+        $file = $request->file('excel_file');
+
+        // Validate and import the Excel file
+        Excel::import(new ExcelImport, $file);
+
+        // Export the modified data back to Excel
+        Excel::store(new YourExportClass, 'modified_file.xlsx');
+
+        return 'Excel file updated successfully!';
     }
 
     public function deleteIar($iar_id){
