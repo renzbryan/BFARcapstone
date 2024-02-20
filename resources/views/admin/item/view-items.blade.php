@@ -195,67 +195,74 @@
         }
 
         footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #dfe3ee;
-            color: #29487d;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    text-align: center;
+    padding: 20px;
+    background-color: #dfe3ee;
+    color: #29487d;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .footer-links {
-            display: flex;
-            gap: 20px;
-        }
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
 
-        .footer-links a {
-            color: #fff;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
 
-        .footer-links a:hover {
-            color: #007bff;
-        }
+.footer-links a:hover {
+    color: #007bff;
+}
 
-        .footer-dropdown {
-            position: relative;
-            display: inline-block;
-            margin-left: 20px;
-            cursor: pointer;
-        }
+.footer-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 20px;
+    cursor: pointer;
+}
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
-            z-index: 1;
-            min-width: 160px;
-            text-align: left;
-        }
+/* Updated dropdown content styles */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1;
+    min-width: 160px;
+    text-align: left;
+    top: 100%; /* Adjusted to appear below the triggering element */
+}
 
-        .footer-dropdown:hover .dropdown-content {
-            display: block;
-        }
+/* Adjusted dropdown item styles */
+.dropdown-item {
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
 
-        .dropdown-item {
-            padding: 12px 20px;
-            text-decoration: none;
-            color: #333;
-            display: block;
-            transition: background-color 0.3s;
-            font-size: 14px;
-        }
+.dropdown-item:hover {
+    background-color: #f4f4f4;
+}
 
-        .dropdown-item:hover {
-            background-color: #f4f4f4;
-        }
+/* Show the dropdown menu above when hovering */
+.footer-dropdown:hover .dropdown-content {
+    display: block;
+    top: auto; /* Resetting the 'top' property for proper positioning */
+    bottom: 100%;
+}
+
 
 
     </style>
@@ -336,6 +343,7 @@
                 <a class="dropdown-item" href="#">Privacy Policy</a>
                 <a class="dropdown-item" href="#">Terms of Service</a>
                 <a class="dropdown-item" href="#">Contact Us</a>
+                <a class="dropdown-item" href="{{ route('export.excel', ['iar_id' => $iar['iar_id']]) }}">Print</a>
             </div>
         </div>
     </footer>

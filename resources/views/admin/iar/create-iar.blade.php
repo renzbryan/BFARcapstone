@@ -86,7 +86,7 @@
 
                 <div>
                     <label for="iar_fundcluster">Fund Cluster:</label>
-                    <input type="text" name="iar_fundcluster" id="iar_fundcluster" required>
+                    <input type="number" name="iar_fundcluster" id="iar_fundcluster" required>
                 </div>
 
                 <div>
@@ -114,7 +114,7 @@
             <div class="grid-item" style="width: 100%">
                 <div>
                     <label for="iar_rcc">Responsibility Center Code:</label>
-                    <input type="text" name="iar_rcc" id="iar_rcc" required>
+                    <input type="number" name="iar_rcc" id="iar_rcc" required>
                 </div>
 
                 <div>
@@ -129,7 +129,7 @@
 
                 <div>
                     <label for="iar_invoice">Invoice No.:</label>
-                    <input type="text" name="iar_invoice" id="iar_invoice" required>
+                    <input type="number" name="iar_invoice" id="iar_invoice" required>
                 </div>
 
                 <div>

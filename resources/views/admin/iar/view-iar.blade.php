@@ -127,17 +127,59 @@
             background-color: #c82333;
             border-color: #c82333;
         }
+        /* Style the dropdown button */
+        /* Style the dropdown button */
+.dropbtn {
+    background-color: #29487d; /* Match the background color of your other navigation buttons */
+    color: #ffffff;
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Style the dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f8f9fa; /* Match the background color of your body */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 10px; /* Match the border-radius of your other buttons */
+}
+
+/* Style the links inside the dropdown */
+.dropdown-content a {
+    color: #29487d; /* Match the color of your other navigation buttons */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-radius: 10px; /* Match the border-radius of your other buttons */
+}
+
+/* Change color on hover */
+.dropdown-content a:hover {
+    background-color: #3498db; /* Match the hover background color of your other navigation buttons */
+    color: #ffffff;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
     </style>
 </head>
 
 <body>
     <nav class="fixed-top">
         <a href="#">Dashboard</a>
-        <a href="">IAR Forms</a>
+        <a href="#">IAR Forms</a>
         <a href="{{ route('archive.iar') }}">Archived IAR Forms</a>
         <a href="#">Profile</a>
-        <a href="#">Settings</a>
-        <a href="#">Log Out</a>
+        <a href="{{ route('logout') }}">Log Out</a>
     </nav>
     <a class="add-item-btn fixed-bottom" href="{{ route('iar.create') }}">+</a>
 
