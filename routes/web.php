@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\IarController;
 use App\Http\Controllers\ItemsController;
+use App\Http\Controllers\RLSDDSPController;
+use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +41,14 @@ Route::resources([
     'item' => ItemsController::class,
 ]);
 
+Route::resources([
+    'stock' => StockController::class,
+]);
+
+Route::resources([
+    'rlsddsp' => RLSDDSPController::class,
+]);
+
 Route::get('/iar/{iar_id}/create-items', [ItemsController::class, 'addItemForm'])->name('items.create');
 Route::post('/iar/{iar_id}/create-items', [ItemsController::class, 'store'])->name('items.store');
 Route::get('/iar/{iar_id}/view-items', [ItemsController::class, 'index'])->name('items.index');
@@ -54,5 +64,14 @@ Route::get('/archived/{iar_id}/iar/restore', [IarController::class, 'restoreIar'
 Route::get('/archived/{iar_id}/item', [ItemsController::class, 'showArchived'])->name('archive.item');
 
 
+
+// Route for updating items' stock status
+Route::post('/update-items-stock', [ItemsController::class, 'updateItemsStock'])->name('update.items.stock');
+
+// Route for updating items' property card status
+Route::post('/update-items-property', [ItemsController::class, 'updateItemsProperty'])->name('update.items.property');
+
+// Route for updating items' WMR status
+Route::post('/update-items-wmr', [ItemsController::class, 'updateItemsWMR'])->name('update.items.wmr');
 
 require __DIR__.'/auth.php';

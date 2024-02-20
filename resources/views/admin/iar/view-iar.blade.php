@@ -133,7 +133,7 @@
 <body>
     <nav class="fixed-top">
         <a href="#">Dashboard</a>
-        <a href="#">IAR Forms</a>
+        <a href="">IAR Forms</a>
         <a href="{{ route('archive.iar') }}">Archived IAR Forms</a>
         <a href="#">Profile</a>
         <a href="#">Settings</a>

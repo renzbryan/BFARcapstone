@@ -131,10 +131,49 @@
             background-color: #c82333;
             border-color: #c82333;
         }
+
+        nav {
+            background-color: #29487d;
+            padding: 15px;
+            margin-bottom: 20px;
+            height: 100px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+
+
+        nav a:hover {
+            color: #0056b3;
+            text-decoration: none;
+        }
+
+        .cancel-btn {
+            background-color: #29487d;
+            font-weight: bold;
+        }
+
+        .cancel-btn:hover {
+            background-color: #4267b2; /* Darker gray */
+        }
+
+        .cancel-btn {
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            text-decoration: none; /* Remove underline */
+            transition: background-color 0.3s; 
+        }
+
     </style>
 </head>
 <body>
-    <a class="back-btn" href="iar">Back</a>
+    <nav class="fixed-top">
+    <button class="cancel-btn" onclick="window.history.back()">< Back</button>
+    </nav>
     <section>
         <div class="container">
             @php
@@ -151,10 +190,8 @@
                     <p class="card-text"><strong>Supplier:</strong> {{ $data['iar_supplier'] }}</p>
     
                     <div class="action-column">
-                        <a class="btn btn-primary" href="{{ route('archive.item', $data['iar_id']) }}">View</a>
+                        <!-- <a class="btn btn-primary" href="{{ route('archive.item', $data['iar_id']) }}">View</a> -->
                         <a class="btn btn-success" href="{{ route('restore.iar', ['iar_id' => $data['iar_id']]) }}">Restore</a>
-    
-                        <a class="btn btn-danger" href="{{ route('delete.iar', ['iar_id' => $data['iar_id']]) }}">Delete</a>
                     </div>
                 </div>
             </div>
