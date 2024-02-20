@@ -16,7 +16,7 @@ class   StockController extends Controller
         return view('admin.stock.view-stock', ['stockData' => $stockData]);
     }
     
-    
+
     
 
 //     // para makuha ang id ng iar

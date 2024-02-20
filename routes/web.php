@@ -5,6 +5,7 @@ use App\Http\Controllers\IarController;
 use App\Http\Controllers\ItemsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileSending;
+use App\Http\Controllers\StockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,8 @@ Route::resources([
     'stock' => StockController::class,
 ]);
 
+Route::get('stock/card_form', [StockController::class, 'createStockCardForm'])->name('stock.card_form');
+
 Route::resources([
     'rlsddsp' => RLSDDSPController::class,
 ]);
@@ -66,5 +69,8 @@ Route::get('/archived/{iar_id}/iar/restore', [IarController::class, 'restoreIar'
 Route::get('/archived/{iar_id}/item', [ItemsController::class, 'showArchived'])->name('archive.item');
 
 
+Route::post('update-items-stock', [ItemsController::class, 'updateItemsStock'])->name('update.items.stock');
+Route::post('update-items-property', [ItemsController::class, 'updateItemsProperty'])->name('update.items.property');
+Route::post('update-items-wmr', [ItemsController::class, 'updateItemsWMR'])->name('update.items.wmr');
 
 require __DIR__.'/auth.php';
