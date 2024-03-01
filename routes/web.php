@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\IarController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\WorkerAcc;
+use App\Http\Controllers\OfficeController;
+use App\Http\Controllers\InventoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileSending;
 
@@ -58,7 +60,8 @@ Route::get('/archived/iar', [IarController::class, 'archiveIar'])->name('archive
 Route::get('/archived/{iar_id}/iar/restore', [IarController::class, 'restoreIar'])->name('restore.iar');
 Route::get('/archived/{iar_id}/item', [ItemsController::class, 'showArchived'])->name('archive.item');
 
-
+Route::get('/update-excel', [IarController::class, 'showForm'])->name('show.form');
+Route::post('/update-excel', [IarController::class, 'updateExcel'])->name('update.excel');
 
 //logout
 Route::any('/logout', [WorkerAcc::class, 'logout'])->name('logout');
@@ -66,5 +69,13 @@ Route::any('/logout', [WorkerAcc::class, 'logout'])->name('logout');
 //file upload
 Route::get('/upload', [FileSending::class, 'showUploadForm']);
 Route::post('/upload', [FileSending::class, 'upload']);
+
+//office
+Route::get('/bfar-office/create', [OfficeController::class, 'createForm'])->name('bfar_office.create');
+Route::post('/bfar-office/store', [OfficeController::class, 'store'])->name('bfar_office.store');
+Route::get('/get-office-code/{id}', [IarController::class, 'getOfficeCode']);
+
+//inventory
+Route::get('/inventory', [InventoryController::class, 'index']);
 
 require __DIR__.'/auth.php';

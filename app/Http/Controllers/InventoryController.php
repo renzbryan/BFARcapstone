@@ -3,20 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Item;
 use App\Models\Inventory;
 
 class InventoryController extends Controller
 {
     
-    public function index(){
-        $inventories = Inventory::get();
-        return view('admin.inventory.view-inventory', compact('inventories'));
+    public function index()
+    {
+        $itemsWithIar = Item::with('iar')->get();
+        return view('admin.inventory.view-inventory', compact('itemsWithIar'));
     }
 
-    public function create(){
-        $inventories = Inventory::get();
-        return view('admin.inventory.create-inventory', compact('inventories'));
-    }
 
     public function store(Request $request){
         $request->validate([
