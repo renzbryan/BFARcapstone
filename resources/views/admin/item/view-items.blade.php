@@ -5,6 +5,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Items View</title>
+
+    <script> 
+    document.addEventListener('DOMContentLoaded', function () { 
+        const stockBtn = document.getElementById('Stockbtn'); 
+        const propertyBtn = document.getElementById('Propertybtn'); 
+        const wmrBtn = document.getElementById('WMRbtn'); 
+        const itemCheckbox = document.getElementsByName('item_checkbox[]'); 
+ 
+        // Function to handle stock update
+        function updateStock() {
+            const selectedItems = Array.from(itemCheckbox)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            updateItems('/update-items-stock', selectedItems, 'Stock');
+        }
+
+        // Function to handle property card update
+        function updatePropertyCard() {
+            const selectedItems = Array.from(itemCheckbox)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            updateItems('/update-items-property', selectedItems, 'Property Card');
+        }
+
+        // Function to handle WMR update
+        function updateWMR() {
+            const selectedItems = Array.from(itemCheckbox)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            updateItems('/update-items-wmr', selectedItems, 'WMR');
+        }
+
+        // Function to update items via AJAX
+        function updateItems(url, itemIds, actionName) {
+            if (itemIds.length > 0) {
+                // Send an AJAX request to update items
+                fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        },
+                        body: JSON.stringify({
+                            item_ids: itemIds
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(`${actionName} updated successfully!`);
+                            // You can add more logic here if needed
+                        } else {
+                            alert(`Failed to update ${actionName}. Please try again.`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                alert('Please select at least one item.');
+            }
+        }
+
+        // Event listeners for buttons
+        stockBtn.addEventListener('click', updateStock);
+        propertyBtn.addEventListener('click', updatePropertyCard);
+        wmrBtn.addEventListener('click', updateWMR);
+    }); 
+</script>
+
+
+
+
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -194,11 +270,15 @@
 <body>
     @foreach($iars as $iar)
     <header>
-        <div class="header-buttons">
-            <button class="cancel-btn" onclick="window.history.back()">< Back</button>
-            <a class="add-item-btn" href="/iar/{{ $iar->iar_id }}/create-items">+ New Item</a>
-        </div>
-    </header>
+    <div class="header-buttons">
+        <button class="cancel-btn" onclick="window.history.back()">< Back</button>
+        <button id="Stockbtn" class="custom-btn">Stock Card</button>
+        <button id="Propertybtn">Property Card</button>
+        <button id="WMRbtn">WMR</button>
+        <a class="add-item-btn" href="/iar/{{ $iar->iar_id }}/create-items">+ New Item</a>
+    </div>
+</header>
+
 
     <div class='container'>
 
@@ -237,21 +317,21 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($items as $data)
-                <tr>
-                    <td><input type="checkbox" name="item_checkbox[]" value="{{ $data->item_id }}"></td> <!-- Checkbox column -->
-                    <td>{{ $data->item_name }}</td>
-                    <td>{{ $data->item_desc }}</td>
-                    <td>{{ $data->item_unit }}</td>
-                    <td>{{ $data->item_quantity }}</td>
-                    <td>
-                        <!-- Add any action buttons or links here if needed -->
-                        {{-- Example: --}}
-                        <a href="#">Edit</a>
-                        <a href="#">Delete</a>
-                    </td>
-                </tr>
-                @endforeach
+            @foreach ($items as $data) 
+            <tr> 
+                <td><input type="checkbox" name="item_checkbox[]" value="{{ $data->item_id }}"></td> 
+                <td>{{ $data->item_name }}</td> 
+                <td>{{ $data->item_desc }}</td> 
+                <td>{{ $data->item_unit }}</td> 
+                <td>{{ $data->item_quantity }}</td> 
+                <td> 
+                    <!-- Add any action buttons or links here if needed --> 
+                    {{-- Example: --}} 
+                    <a href="#">Edit</a> 
+                    <a href="#">Delete</a> 
+                </td> 
+            </tr> 
+        @endforeach
             </tbody>
         </table>
     </div>

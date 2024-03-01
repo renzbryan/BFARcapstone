@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('iar_tbl', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::table('rlsddsp', function (Blueprint $table) {
+            //
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('iar_tbl', function (Blueprint $table) {
-            $table->dropSoftDeletes();
+        Schema::table('rlsddsp', function (Blueprint $table) {
+            //
         });
     }
 };

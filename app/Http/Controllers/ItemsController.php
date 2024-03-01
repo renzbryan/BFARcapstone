@@ -76,5 +76,46 @@ class ItemsController extends Controller
     return view('admin.item.archived-item', compact('trashedItems', 'iars'));
 }
 
-    
+public function updateItemsStock(Request $request) 
+    { 
+        $itemIds = $request->input('item_ids', []); 
+ 
+        if (!empty($itemIds)) { 
+            // Assuming your model is named 'Item' and the table is 'items_tbl' 
+            // Update 'is_stock' column to 1 for selected items 
+            Item::whereIn('item_id', $itemIds)->update(['is_stock' => 1]); 
+ 
+            return response()->json(['success' => true]); 
+        } else { 
+            return response()->json(['success' => false, 'message' => 'No items selected.']); 
+        } 
+    }
+
+    public function updateItemsProperty(Request $request) 
+    { 
+        $itemIds = $request->input('item_ids', []); 
+ 
+        if (!empty($itemIds)) { 
+            // Update 'is_property' column to 1 for selected items 
+            Item::whereIn('item_id', $itemIds)->update(['is_property' => 1]); 
+ 
+            return response()->json(['success' => true]); 
+        } else { 
+            return response()->json(['success' => false, 'message' => 'No items selected.']); 
+        } 
+    }
+
+    public function updateItemsWMR(Request $request) 
+    { 
+        $itemIds = $request->input('item_ids', []); 
+ 
+        if (!empty($itemIds)) { 
+            // Update 'is_wmr' column to 1 for selected items 
+            Item::whereIn('item_id', $itemIds)->update(['is_wmr' => 1]); 
+ 
+            return response()->json(['success' => true]); 
+        } else { 
+            return response()->json(['success' => false, 'message' => 'No items selected.']); 
+        } 
+    }
 }

@@ -175,13 +175,8 @@
 
 <body>
     <nav class="fixed-top">
-        <div class="dropdown">
-            <button class="dropbtn">Forms</button>
-            <div class="dropdown-content">
-                <a href="{{route('iar.index')}}">IAR Form</a>
-            </div>
-        </div>
-    
+        <a href="#">Dashboard</a>
+        <a href="#">IAR Forms</a>
         <a href="{{ route('archive.iar') }}">Archived IAR Forms</a>
         <a href="#">Profile</a>
         <a href="{{ route('logout') }}">Log Out</a>

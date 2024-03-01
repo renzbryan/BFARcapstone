@@ -8,6 +8,7 @@ use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\InventoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileSending;
+use App\Http\Controllers\StockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,16 @@ Route::resources([
     'item' => ItemsController::class,
 ]);
 
+Route::resources([
+    'stock' => StockController::class,
+]);
+
+Route::get('stock/card_form', [StockController::class, 'createStockCardForm'])->name('stock.card_form');
+
+Route::resources([
+    'rlsddsp' => RLSDDSPController::class,
+]);
+
 Route::get('/iar/{iar_id}/create-items', [ItemsController::class, 'addItemForm'])->name('items.create');
 Route::post('/iar/{iar_id}/create-items', [ItemsController::class, 'store'])->name('items.store');
 Route::get('/iar/{iar_id}/view-items', [ItemsController::class, 'index'])->name('items.index');
@@ -69,6 +80,12 @@ Route::any('/logout', [WorkerAcc::class, 'logout'])->name('logout');
 //file upload
 Route::get('/upload', [FileSending::class, 'showUploadForm']);
 Route::post('/upload', [FileSending::class, 'upload']);
+
+
+Route::post('update-items-stock', [ItemsController::class, 'updateItemsStock'])->name('update.items.stock');
+Route::post('update-items-property', [ItemsController::class, 'updateItemsProperty'])->name('update.items.property');
+Route::post('update-items-wmr', [ItemsController::class, 'updateItemsWMR'])->name('update.items.wmr');
+
 
 //office
 Route::get('/bfar-office/create', [OfficeController::class, 'createForm'])->name('bfar_office.create');
