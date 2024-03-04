@@ -86,24 +86,15 @@ class ExportExc implements WithHeadings, FromView
             $content = ob_get_contents();
             ob_end_clean();
     
-            // Log the download
-            Log::info('IAR download', ['iar_id' => $data->iar_id, 'user_id' => auth()->id(), 'timestamp' => now()]);
-    
             return response()->make($content, 200, [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment; filename="IAR_' . $data->iar_number . '.xlsx"',
-                'Content-Transfer-Encoding' => 'binary',
-                'Expires' => 0,
-                'Cache-Control' => 'must-revalidate',
-                'Pragma' => 'public',
-            ])->send();
+            ]);
         } catch (\Exception $e) {
             Log::error('Exception in ExportExc export method: ' . $e->getMessage());
             throw $e; // Re-throw the exception to halt execution
         }
     }
-    
-    
     
     public function exportPdf()
     {
@@ -120,4 +111,5 @@ class ExportExc implements WithHeadings, FromView
             'Content-Disposition' => 'attachment; filename="IAR.pdf"',
         ]);
     }
+
 }

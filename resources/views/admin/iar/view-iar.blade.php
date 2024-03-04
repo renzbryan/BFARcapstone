@@ -184,11 +184,14 @@
     <a class="add-item-btn fixed-bottom" href="{{ route('iar.create') }}">+</a>
 
     <div class="container">
+        <div class="mb-4">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search IAR...">
+        </div>
         @php
         $reversedIars = array_reverse($iars->toArray());
         @endphp
         @foreach($reversedIars as $data)
-        <div class="card">
+        <div class="card iar-card">
             <div class="card-header">
                 IAR Form #{{ $data['iar_number'] }}
             </div>
@@ -207,6 +210,22 @@
         </div>
         @endforeach
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const iarCards = document.querySelectorAll('.iar-card');
+
+            searchInput.addEventListener('input', function () {
+                const query = searchInput.value.toLowerCase();
+
+                iarCards.forEach(function (card) {
+                    const cardText = card.innerText.toLowerCase();
+                    const isVisible = cardText.includes(query);
+                    card.style.display = isVisible ? 'block' : 'none';
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

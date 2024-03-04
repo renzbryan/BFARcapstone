@@ -7,9 +7,10 @@ use App\Models\Iar;
 use App\Exports\ExportExc;
 use App\Models\Item;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\YourExportClass;
 use App\Imports\ExcelImport;
-
+use App\Models\BfarOffice;
+use Illuminate\Support\Facades\Log;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class IarController extends Controller
 {
@@ -18,12 +19,28 @@ class IarController extends Controller
         return view('admin.iar.view-iar', compact('iars'));
     }
 
-    public function create(){
+    public function create()
+    {
         $iars = Iar::get();
-        return view('admin.iar.create-iar', compact('iars'));
-    }
+        $model = new BfarOffice();
+        $officeOptions = $model->getOptions();
 
-    public function store(Request $request){
+        return view('admin.iar.create-iar', compact('iars', 'officeOptions'));
+    }
+    public function getOfficeCode($id)
+    {
+        $model = new BfarOffice();
+        $office = $model->find($id);
+    
+        if ($office) {
+            $officeCode = $office->rcc; 
+            return response()->json(['officeCode' => $officeCode]);
+        } else {
+            return response()->json(['error' => 'Record not found'], 404);
+        }
+    }
+    public function store(Request $request)
+    {
         $request->validate([ 
             'iar_entityname'=>'nullable', 
             'iar_fundcluster'=>'nullable', 
@@ -36,9 +53,16 @@ class IarController extends Controller
             'iar_invoice'=>'nullable', 
             'iar_invoice_d'=>'nullable', 
         ]);
-        Iar::create($request->all());
-            return redirect('iar')->with('success', 'SUCCESSFULLY ADDED');
+        $selectedOfficeId = $request->iar_rod;
+        $selectedOffice = BfarOffice::findOrFail($selectedOfficeId);
+        $iarRodValue = $selectedOffice ? $selectedOffice->office : null;
+        $requestData = $request->all();
+        $requestData['iar_rod'] = $iarRodValue;
+        Iar::create($requestData);
+    
+        return redirect('iar')->with('success', 'SUCCESSFULLY ADDED');
     }
+    
 
 
     public function downloadExcel($id)
@@ -48,19 +72,21 @@ class IarController extends Controller
             return $export->export();
     }
 
-
+    public function showForm()
+    {
+        return view('exceledit');
+    }
     public function updateExcel(Request $request)
     {
-        $file = $request->file('excel_file');
-
-        // Validate and import the Excel file
-        Excel::import(new ExcelImport, $file);
-
-        // Export the modified data back to Excel
-        Excel::store(new YourExportClass, 'modified_file.xlsx');
-
-        return 'Excel file updated successfully!';
+        $filePath = storage_path('app/IAR.xlsx');
+        $spreadsheet = IOFactory::load($filePath);
+        $updatedValue = strtoupper($request->input('updated_value'));
+        $spreadsheet->getActiveSheet()->setCellValue('G51', $updatedValue);
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save($filePath);
+        return redirect()->route('show.form')->with('success', 'IAR excel file updated successfully!');
     }
+
 
     public function deleteIar($iar_id){
     $iar = Iar::find($iar_id);
@@ -80,4 +106,6 @@ class IarController extends Controller
         Item::where('iar_id', $iar_id)->withTrashed()->restore();
         return redirect('iar')->with('success', 'Iar and associated items restored successfully.');
     }
+
+    
 }

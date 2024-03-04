@@ -46,6 +46,7 @@
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
+            text-align: left; /* Align the text to the left */
         }
 
         input {
@@ -55,6 +56,13 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+        select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
 
         button {
@@ -71,6 +79,7 @@
             background-color: #dc3545;
         }
     </style>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
     <section>
@@ -90,8 +99,12 @@
                 </div>
 
                 <div>
-                    <label for="iar_supplier">Supplier:</label>
-                    <input type="text" name="iar_supplier" id="iar_supplier" required>
+                    <label for="iar_supplier">Supplier</label>
+                    <select name="iar_supplier" id="iar_supplier" required>
+                        <option value="office 1">Hatulan</option>
+                        <option value="office 2">Calapan water</option>
+                        <option value="office 3">Hatulan</option>
+                    </select>
                 </div>
 
                 <div>
@@ -101,7 +114,11 @@
 
                 <div>
                     <label for="iar_rod">Requisitioning Office/Dept.:</label>
-                    <input type="text" name="iar_rod" id="iar_rod" required>
+                    <select name="iar_rod" id="iar_rod">
+                        @foreach ($officeOptions as $key => $office)
+                            <option value="{{ $key }}">{{ $office }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div>
@@ -114,7 +131,7 @@
             <div class="grid-item" style="width: 100%">
                 <div>
                     <label for="iar_rcc">Responsibility Center Code:</label>
-                    <input type="number" name="iar_rcc" id="iar_rcc" required>
+                    <input type="text" name="iar_rcc" id="iar_rcc" readonly>
                 </div>
 
                 <div>
@@ -141,9 +158,31 @@
 
             </div>
 
-            
+            <script>
+                // Add script to set the date to today
+                document.getElementById('iar_date').valueAsDate = new Date();
+            </script>
         </form>
     </div>
     </section>
+
+<script>
+$(document).ready(function () {
+    $('#iar_rod').change(function () {
+        var selectedOfficeId = $(this).val();
+
+        $.ajax({
+            url: '/get-office-code/' + selectedOfficeId,
+            type: 'GET',
+            success: function (data) {
+                $('#iar_rcc').val(data.officeCode);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
