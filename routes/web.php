@@ -47,7 +47,7 @@ Route::resources([
     'stock' => StockController::class,
 ]);
 
-Route::get('stock/card_form', [StockController::class, 'createStockCardForm'])->name('stock.card_form');
+Route::get('/stock', [StockController::class, 'index'])->name('stock.index');
 
 Route::resources([
     'rlsddsp' => RLSDDSPController::class,

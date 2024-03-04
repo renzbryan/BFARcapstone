@@ -11,9 +11,11 @@ class   StockController extends Controller
 {
     public function index()
     {
-        $stockData = Stock::all();
-    
-        return view('admin.stock.view-stock', ['stockData' => $stockData]);
+        // Fetch all stock card entries
+        $stockEntries = Stock::all();
+
+        // Pass the data to the view and return the view
+        return view('stock.index', compact('stockEntries'));
     }
     
 
