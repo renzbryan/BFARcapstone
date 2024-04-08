@@ -129,7 +129,7 @@
             </div>
         </div>
         <a href="{{route('tasks.index')}}">Task</a>
-        <div class="dropdown">
+        <div ~class="dropdown">
         <button class="btn dropdown-toggle" type="button" id="formsDropdown" aria-haspopup="true" aria-expanded="false">
             Forms
         </button>

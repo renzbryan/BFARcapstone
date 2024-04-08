@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-
+use App\Models\Task;
 class TaskDueNotification extends Notification
 {
     use Queueable;
@@ -34,12 +34,16 @@ class TaskDueNotification extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail($notifiable)
     {
+        $task = $this->task;
+
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject('Task Due Notification')
+            ->line('Dear ' . $notifiable->name . ',')
+            ->line('This is to notify you that the task "' . $task->title . '" is due soon.')
+            ->action('View Task', url('/tasks/' . $task->id))
+            ->line('Thank you for using our application.');
     }
 
     /**
@@ -54,4 +58,10 @@ class TaskDueNotification extends Notification
             'message' => 'Task ' . $this->task->title . ' is due soon.',
         ];
     }
+
+    public function sendNotification($task)
+        {
+            $user = $task->assignedUser;
+            $user->notify(new TaskDueNotification($task));
+        }
 }
