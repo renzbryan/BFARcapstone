@@ -5,14 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Inventory;
+Use App\Models\BfarOffice;
 
 class InventoryController extends Controller
 {
     
     public function index()
     {
+        $officeModel= new BfarOffice();
+        $officeOptions= $officeModel->getOptions();
         $itemsWithIar = Item::with('iar')->get();
-        return view('admin.inventory.view-inventory', compact('itemsWithIar'));
+        return view('admin.inventory.view-inventory', compact('itemsWithIar','officeOptions'));
     }
 
 

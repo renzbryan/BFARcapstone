@@ -116,18 +116,27 @@
             border-color: #c82333;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
     <nav class="fixed-top">
-        <!-- Your existing navigation bar code here -->
     </nav>
 
     <a class="add-item-btn fixed-bottom" href="#">+</a>
 
     <div class="container">
-        <h2>Company Inventory</h2>
-
+        <h2>BFAR Inventory</h2>
+        <div class="filter-container">
+            <label for="officeFilter">Filter by Office:</label>
+            <select name="officeFilter" id="officeFilter">
+                <option value="" disabled selected>Select the Office</option>
+                <option value="">All Items</option> <!-- Option for all items -->
+                @foreach ($officeOptions as $key => $office)
+                    <option value="{{ $key }}">{{ $office }}</option>
+                @endforeach
+            </select>
+        </div>
         <table class="inventory-table">
             <thead>
                 <tr>
@@ -135,8 +144,7 @@
                     <th>Category</th>
                     <th>Quantity</th>
                     <th>Unit</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>Office</th>
                 </tr>
             </thead>
             <tbody>
@@ -147,17 +155,27 @@
                     <td>{{ $item->item_quantity }}</td>
                     <td>{{ $item->item_unit }}</td>
                     <td>{{ $item->iar->iar_rod ?? 'N/A' }}</td>
-                    <!-- Display other columns as needed -->
-                    <td>
-                        <a class="btn btn-primary" href="#">View</a>
-                        <a class="btn btn-success" href="#">Print</a>
-                        <a class="btn btn-danger" href="#">Delete</a>
-                    </td>
                 </tr>
-            @endforeach
+                @endforeach
             </tbody>
         </table>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#officeFilter').change(function () {
+                var selectedOffice = $(this).val();
+                $('tbody tr').each(function () {
+                    var officeInRow = $(this).find('td:nth-child(5)').text(); 
+                    if (selectedOffice === '' || officeInRow === selectedOffice) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
+    
 </body>
 
 </html>

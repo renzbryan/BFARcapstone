@@ -27,6 +27,7 @@
             margin: 0 auto;
         }
 
+
         .grid-container {
             display: grid;
             grid-template-columns: auto auto;
@@ -111,14 +112,17 @@
                     <label for="iar_Podate">PO No/Date:</label>
                     <input type="date" name="iar_Podate" id="iar_Podate" required>
                 </div>
-
                 <div>
                     <label for="iar_rod">Requisitioning Office/Dept.:</label>
-                    <select name="iar_rod" id="iar_rod">
-                        @foreach ($officeOptions as $key => $office)
-                            <option value="{{ $key }}">{{ $office }}</option>
-                        @endforeach
-                    </select>
+                    <div class="option-wrapper">
+                        <select name="iar_rod" id="iar_rod">
+                            <option value="" disabled selected>Select the Office</option>
+                            @foreach ($officeOptions as $key => $office)
+                                <option value="{{ $key }}">{{ $office }}</option>
+                            @endforeach
+                        </select>
+            
+                    </div>
                 </div>
 
                 <div>
