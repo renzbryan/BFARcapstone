@@ -29,7 +29,38 @@
         </div>
         <h2 class="mt-4">Task List</h2>
         <table class="table">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Assigned To</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($tasks as $task)
+                    <tr>
+                        <td>{{ $task->title }}</td>
+                        <td>{{ $task->description }}</td>
+                        <td>{{ $task->priority }}</td>
+                        <td>{{ $task->assignedUser->name }}</td>
+                        <td>
+                            @if ($task->status == 'viewed')
+                                <span class="badge badge-primary">Viewed</span>
+                            @elseif ($task->status == 'done')
+                                <span class="badge badge-success">Done</span>
+                            @else
+                                <span class="badge badge-secondary">Pending</span>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
+        
+        
+        
         @include('admin.task.assigntask')
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

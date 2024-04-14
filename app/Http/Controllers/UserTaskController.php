@@ -90,6 +90,10 @@ class UserTaskController extends Controller
             // Default case if type is not recognized
             break;
     }
+    $task->status = 'done';
+    $task->save();
+
+    return redirect()->route('tasks.index')->with('success', 'Task marked as done successfully.');
 
 }
 

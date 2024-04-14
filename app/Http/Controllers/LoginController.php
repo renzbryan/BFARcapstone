@@ -27,8 +27,6 @@ class LoginController extends Controller
             return redirect()->route('tasks.index');
         } elseif ($user->isUser()) {
             return redirect()->route('homepage.index');
-        } else {
-            return redirect('/home');
         }
     }
 

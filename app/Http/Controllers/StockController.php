@@ -15,7 +15,7 @@ class   StockController extends Controller
         $stockEntries = Stock::all();
 
         // Pass the data to the view and return the view
-        return view('stock.index', compact('stockEntries'));
+        return view('admin.stock.view-stock', compact('stockEntries'));
     }
     
 
