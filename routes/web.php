@@ -11,6 +11,8 @@ use App\Http\Controllers\FileSending;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\WMRController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\LoginController;
@@ -31,6 +33,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
 Route::middleware(['auth', 'user'])->group(function () {
     Route::resource('homepage', UserController::class);
@@ -109,6 +114,8 @@ Route::resources([
     'stock' => StockController::class,
 ]);
 
+Route::get('/property', [PropertyController::class, 'index'])->name('property.index');
+Route::get('/wmr', [WMRController::class, 'index'])->name('wmr.index');
 Route::get('/stock', [StockController::class, 'index'])->name('stock.index');
 
 Route::resources([
