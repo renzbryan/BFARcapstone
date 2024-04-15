@@ -12,7 +12,7 @@ use App\Models\BfarOffice;
 use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
-class StockController extends Controller
+class PropertyController extends Controller
 {
 
     // public function index(){
@@ -23,9 +23,9 @@ class StockController extends Controller
     public function index()
     {
         // Fetch items where is_stock column is not null
-        $stockEntries = Item::whereNotNull('is_stock')->get();
+        $propertyEntries = Item::whereNotNull('is_property')->get();
     
         // Pass the data to the view and return the view
-        return view('admin.stock.view-stock', compact('stockEntries'));
+        return view('admin.property.view-property', compact('propertyEntries'));
     }
 }

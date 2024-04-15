@@ -107,8 +107,8 @@
                 <div>
                     <label for="item_unit">Unit:</label>
                     <select name="item_unit" id="item_unit" required>
-                        <option value="unit 1">set</option>
-                        <option value="unit 2">bundle</option>
+                        <option value="set">set</option>
+                        <option value="bundle">bundle</option>
                     </select>
                 </div>
 

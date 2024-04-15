@@ -142,12 +142,13 @@
     <a href="#" class="dropdown-toggle">Forms</a>
     <div class="dropdown-content">
       <a href="{{ route('iar.index') }}">IAR Form</a>
-      <a href="#">Stock Card</a>
-      <a href="#">Property Card</a>
-      <a href="#">RIS Form</a>
+      <a href="{{ route('stock.index') }}">Stock Card</a>
+      <a href="{{ route('property.index') }}">Property Card</a>
+      <a href="{{ route('wmr.index') }}">WMR Form</a>
+      <!-- <a href="#">RIS Form</a>
       <a href="#">ICS Form</a>
       <a href="#">ITR Form</a>
-      <a href="#">RLSDDSP Form</a>
+      <a href="#">RLSDDSP Form</a> -->
       <!-- Add other form links here -->
     </div>
   </div>
