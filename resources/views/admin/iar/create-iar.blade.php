@@ -87,6 +87,9 @@
         <div class="container">
         <form action="{{ route('iar.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @if(isset($taskId))
+                <input type="hidden" name="task_id" value="{{ $taskId }}">
+            @endif
             <div class="grid-container">
             <div class="grid-item" style="width: 100%">
                 <div>
@@ -140,7 +143,7 @@
 
                 <div>
                     <label for="iar_number">IAR No.:</label>
-                    <input type="text" name="iar_number" id="iar_number" required>
+                    <input type="text" name="iar_number" id="iar_number" value="{{ $iarNumber }}" required readonly>
                 </div>
 
                 <div>

@@ -18,14 +18,14 @@ class UserTaskController extends Controller
     }
     public function doTask(Request $request, Task $task, $type)
 {
+    $taskId=$task->id;
     switch ($type) {
         case 'IAR':
                 $iars = Iar::get();
                 $model = new BfarOffice();
                 $officeOptions = $model->getOptions();
         
-                return view('admin.iar.create-iar', compact('iars', 'officeOptions'));
-            break;
+                return view('admin.iar.create-iar', compact('iars', 'officeOptions','taskId'));
         case 'Stock':
             // Handle Stock task
             break;
@@ -93,7 +93,7 @@ class UserTaskController extends Controller
     $task->status = 'done';
     $task->save();
 
-    return redirect()->route('tasks.index')->with('success', 'Task marked as done successfully.');
+    return redirect()->route('usertasks.index')->with('success', 'Task marked as done successfully.');
 
 }
 

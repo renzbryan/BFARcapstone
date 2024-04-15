@@ -32,7 +32,7 @@ Route::get('/', function () {
 });
 
 
-Route::middleware(['auth', 'user','admin'])->group(function () {
+Route::middleware(['auth', 'user'])->group(function () {
     Route::resource('homepage', UserController::class);
     Route::resource('iar', IarController::class);
     Route::resource('stock', StockController::class);

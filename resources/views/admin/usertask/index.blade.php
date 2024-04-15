@@ -93,7 +93,6 @@
             
                     <div class="action-column">
                         <a class="btn btn-success" href="{{ route('tasks.do', ['task' => $task->id, 'type' => $task->title]) }}">Do Task</a>
-                        <a class="btn btn-primary" href="">View Task</a>
                     </div>
                     @if($task->priority === 'High')
                     <div class="alert alert-danger" role="alert">
