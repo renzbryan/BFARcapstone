@@ -161,7 +161,8 @@ Route::get('/view-stock', 'StockController@viewStock')->name('view.stock');
 
 Route::get('/admindashboard', [ChartController::class, 'index']);
 Route::get('/get-iar', [ChartController::class, 'getIar']);
-
+Route::get('/get-inventory-data', [ChartController::class, 'getInventoryData']);
+Route::get('/get-inventory-dates', [ChartController::class, 'getInventoryDates']);
 
 require __DIR__.'/auth.php';
 
