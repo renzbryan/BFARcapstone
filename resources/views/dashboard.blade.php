@@ -136,7 +136,7 @@
   <img src="{{ asset('images/logo.png') }}" alt="Logo">
 
   <a href="#">Dashboard</a>
-  <a href="{{ route('tasks.index') }}">My Task</a>
+  <a href="{{ route('usertasks.index') }}">My Task</a>
 
   <div class="dropdown">
     <a href="#" class="dropdown-toggle">Forms</a>

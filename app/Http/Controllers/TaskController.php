@@ -28,6 +28,7 @@ class TaskController extends Controller
         $task->title = $request->input('task_title');
         $task->priority = $request->input('priority');
         $task->description = $request->input('task_description');
+        $task->status = 'pending';
         $task->assigned_user_id = $user->id;
         $task->save();
         return redirect()->route('tasks.index')->with('success', 'Task assigned successfully');
