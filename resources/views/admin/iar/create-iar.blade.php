@@ -57,7 +57,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-                select {
+        select {
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
@@ -87,6 +87,9 @@
         <div class="container">
         <form action="{{ route('iar.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @if(isset($taskId))
+                <input type="hidden" name="task_id" value="{{ $taskId }}">
+            @endif
             <div class="grid-container">
             <div class="grid-item" style="width: 100%">
                 <div>
@@ -137,8 +140,12 @@
 
                 <!-- <div>
                     <label for="iar_number">IAR No.:</label>
+
                     <input type="text" name="iar_number" id="iar_number" required>
                 </div> -->
+                    <input type="text" name="iar_number" id="iar_number" value="{{ $iarNumber }}" required readonly>
+                </div>
+
 
                 <div>
                     <label for="iar_date">Date:</label>

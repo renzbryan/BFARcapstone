@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ExcelImport;
 use App\Models\BfarOffice;
 use Illuminate\Support\Facades\Log;
+use App\Models\Task;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class IarController extends Controller
@@ -21,11 +22,15 @@ class IarController extends Controller
 
     public function create()
     {
+        $iar= new Iar();
         $iars = Iar::get();
         $model = new BfarOffice();
         $officeOptions = $model->getOptions();
+        $lastInsertedId = $iar->iar_id;
 
-        return view('admin.iar.create-iar', compact('iars', 'officeOptions'));
+        // Generate the IAR number
+        $iarNumber = 'IAR-' . str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
+        return view('admin.iar.create-iar', compact('iars', 'officeOptions','iarNumber'));
     }
     public function getOfficeCode($id)
     {
@@ -41,6 +46,7 @@ class IarController extends Controller
     }
     public function store(Request $request)
     {
+        $iar= new IAR();
         $request->validate([ 
             'iar_entityname'=>'nullable', 
             'iar_fundcluster'=>'nullable', 
@@ -53,13 +59,19 @@ class IarController extends Controller
             'iar_invoice'=>'nullable', 
             'iar_invoice_d'=>'nullable', 
         ]);
+
         $selectedOfficeId = $request->iar_rod;
         $selectedOffice = BfarOffice::findOrFail($selectedOfficeId);
         $iarRodValue = $selectedOffice ? $selectedOffice->office : null;
         $requestData = $request->all();
         $requestData['iar_rod'] = $iarRodValue;
         Iar::create($requestData);
-    
+        $taskId = $request->input('task_id'); // Assuming you have a hidden input field in your form containing the task ID
+        if ($taskId) {
+            $task = Task::findOrFail($taskId);
+            $task->status = 'done';
+            $task->save();
+        }
         return redirect('iar')->with('success', 'SUCCESSFULLY ADDED');
     }
     

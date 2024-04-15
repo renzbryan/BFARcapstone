@@ -14,8 +14,18 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class StockController extends Controller
 {
+
     public function index(){
         $stocks = Item::get();
         return view('admin.stock.view-stock', compact('stock'));
+    }
+    public function index()
+    {
+        // Fetch all stock card entries
+        $stockEntries = Stock::all();
+
+        // Pass the data to the view and return the view
+        return view('admin.stock.view-stock', compact('stockEntries'));
+
     }
 }
