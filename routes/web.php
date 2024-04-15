@@ -46,7 +46,9 @@ Route::middleware(['auth', 'user'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
 
-
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -159,7 +161,7 @@ Route::post('/bfar-office/store', [OfficeController::class, 'store'])->name('bfa
 Route::get('/get-office-code/{id}', [IarController::class, 'getOfficeCode']);
 
 //inventory
-Route::get('/inventory', [InventoryController::class, 'index']);
+Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
 
 
 Route::get('/view-stock', 'StockController@viewStock')->name('view.stock');

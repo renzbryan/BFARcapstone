@@ -136,7 +136,7 @@
   <img src="{{ asset('images/logo.png') }}" alt="Logo">
 
   <a href="#">Dashboard</a>
-  <a href="{{ route('tasks.index') }}">My Task</a>
+  <a href="{{ route('usertasks.index') }}">My Task</a>
 
   <div class="dropdown">
     <a href="#" class="dropdown-toggle">Forms</a>
@@ -154,7 +154,7 @@
   </div>
 
   <a href="{{ route('archive.iar') }}">Archived Forms</a>
-  <a href="#">Inventory</a>
+  <a href="{{ route('inventory.index') }}">Inventory</a>
 
   <div class="dropdown">
     <a href="#" class="dropdown-toggle">Notifications <span class="badge badge-pill badge-primary">{{ auth()->user()->unreadNotifications()->count() }}</span></a>

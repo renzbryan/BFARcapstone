@@ -12,7 +12,9 @@ class UserTaskController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $tasks = Task::where('assigned_user_id', $user->id)->get();
+        $tasks = Task::where('assigned_user_id', $user->id)
+                     ->where('status', '!=', 'done')
+                     ->paginate(3); // Paginate the results with 3 tasks per page
         
         return view('admin.usertask.index', compact('tasks'));
     }
