@@ -62,6 +62,14 @@
             box-sizing: border-box;
         }
 
+        select {
+            width: 97%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
         button {
             background-color: #007bff;
             color: #fff;
@@ -95,9 +103,13 @@
                     <input type="text" name="item_desc" id="item_desc" required>
                 </div>
 
+
                 <div>
                     <label for="item_unit">Unit:</label>
-                    <input type="text" name="item_unit" id="item_unit" required>
+                    <select name="item_unit" id="item_unit" required>
+                        <option value="unit 1">set</option>
+                        <option value="unit 2">bundle</option>
+                    </select>
                 </div>
 
                 <div>

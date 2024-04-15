@@ -157,5 +157,9 @@ Route::get('/get-office-code/{id}', [IarController::class, 'getOfficeCode']);
 //inventory
 Route::get('/inventory', [InventoryController::class, 'index']);
 
+
+Route::get('/view-stock', 'StockController@viewStock')->name('view.stock');
+
+
 require __DIR__.'/auth.php';
 

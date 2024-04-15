@@ -296,9 +296,9 @@
                 </div>
                 <div>
                     <p><strong>Fund Cluster: </strong>{{ $iar->iar_fundcluster }}</p><br>
-                    <p><strong>IAR No.: </strong>{{ $iar->iar_number }}</p>
+                    <p><strong>IAR No.: </strong>{{ $iar->iar_id }}</p>
                     <p><strong>Date: </strong>{{ $iar->iar_date }}</p>
-                    <p><strong>Invoice No.: </strong>{{ $iar->iar_invoice }}</p>
+                    <p><strong>Invoice No.: </strong>{{ $iar->iar_id }}</p>
                     <p><strong>Date: </strong>{{ $iar->iar_invoice_d }}</p>
                 </div>
             </div>

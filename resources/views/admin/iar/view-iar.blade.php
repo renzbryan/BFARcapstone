@@ -30,7 +30,6 @@
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s ease-in-out;
-            float: right;
         }
 
         nav a:hover {
@@ -175,11 +174,9 @@
 
 <body>
     <nav class="fixed-top">
-        <a href="#">Dashboard</a>
-        <a href="#">IAR Forms</a>
+        <a href="{{ route('dashboard') }}">Dashboard</a>
         <a href="{{ route('archive.iar') }}">Archived IAR Forms</a>
-        <a href="#">Profile</a>
-        <a href="{{ route('logout') }}">Log Out</a>
+
     </nav>
     <a class="add-item-btn fixed-bottom" href="{{ route('iar.create') }}">+</a>
 
@@ -193,7 +190,7 @@
         @foreach($reversedIars as $data)
         <div class="card iar-card">
             <div class="card-header">
-                IAR Form #{{ $data['iar_number'] }}
+                IAR Form #{{ $data['iar_id'] }}
             </div>
             <div class="card-body">
                 <p class="card-text1"><strong>{{ $data['iar_entityname'] }}</strong> </p>

@@ -57,15 +57,15 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        select {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+                select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
 
-
+    
         button {
             background-color: #007bff;
             color: #fff;
@@ -102,9 +102,8 @@
                 <div>
                     <label for="iar_supplier">Supplier</label>
                     <select name="iar_supplier" id="iar_supplier" required>
-                        <option value="office 1">Hatulan</option>
+                        <option value="office 1">Hatulan Engineering Works & Machine Shop</option>
                         <option value="office 2">Calapan water</option>
-                        <option value="office 3">Hatulan</option>
                     </select>
                 </div>
 
@@ -124,12 +123,10 @@
             
                     </div>
                 </div>
-
-                <div>
-                    <button type="submit">Save</button>
-                    <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
-                </div>
-
+        <div class="buttons">
+            <button type="submit">Save</button>
+            <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
+        </div>
             </div>
         
             <div class="grid-item" style="width: 100%">
@@ -138,20 +135,20 @@
                     <input type="text" name="iar_rcc" id="iar_rcc" readonly>
                 </div>
 
-                <div>
+                <!-- <div>
                     <label for="iar_number">IAR No.:</label>
                     <input type="text" name="iar_number" id="iar_number" required>
-                </div>
+                </div> -->
 
                 <div>
                     <label for="iar_date">Date:</label>
                     <input type="date" name="iar_date" id="iar_date" required>
                 </div>
 
-                <div>
+                <!-- <div>
                     <label for="iar_invoice">Invoice No.:</label>
                     <input type="number" name="iar_invoice" id="iar_invoice" required>
-                </div>
+                </div> -->
 
                 <div>
                     <label for="iar_invoice_d">Date:</label>
@@ -167,6 +164,8 @@
                 document.getElementById('iar_date').valueAsDate = new Date();
             </script>
         </form>
+
+
     </div>
     </section>
 
