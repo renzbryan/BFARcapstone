@@ -130,7 +130,6 @@
         <div class="filter-container">
             <label for="officeFilter">Filter by Office:</label>
             <select name="officeFilter" id="officeFilter">
-                <option value="" disabled selected>Select the Office</option>
                 <option value="">All Items</option> <!-- Option for all items -->
                 @foreach ($officeOptions as $key => $office)
                     <option value="{{ $key }}">{{ $office }}</option>
@@ -165,14 +164,14 @@
             $('#officeFilter').change(function () {
                 var selectedOffice = $(this).val();
                 $('tbody tr').each(function () {
-                    var officeInRow = $(this).find('td:nth-child(5)').text(); 
+                    var officeInRow = $(this).find('td:nth-child(5)').text().trim(); // Trim to remove any leading/trailing whitespaces
                     if (selectedOffice === '' || officeInRow === selectedOffice) {
-                        $(this).show();
+                        $(this).show(); // Show the row if it matches the selected office or if no office is selected
                     } else {
-                        $(this).hide();
+                        $(this).hide(); // Hide the row if it doesn't match the selected office
                     }
                 });
-            });
+            }).trigger('change'); // Trigger the change event initially to filter the inventory on page load
         });
     </script>
     

@@ -153,7 +153,7 @@
   </div>
 
   <a href="{{ route('archive.iar') }}">Archived Forms</a>
-  <a href="#">Inventory</a>
+  <a href="{{ route('inventory.index') }}">Inventory</a>
 
   <div class="dropdown">
     <a href="#" class="dropdown-toggle">Notifications <span class="badge badge-pill badge-primary">{{ auth()->user()->unreadNotifications()->count() }}</span></a>
