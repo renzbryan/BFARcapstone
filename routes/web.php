@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\IarController;
 use App\Http\Controllers\ItemsController;
@@ -17,6 +17,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserTaskController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\CommentController;
+use App\Http\Livewire\PrintPreview;
+
+use App\Http\Controllers\MessageController;
 use App\Models\User;
 /*
 |--------------------------------------------------------------------------
@@ -29,26 +34,18 @@ use App\Models\User;
 |
 */
 
+Route::get('/print-preview/{iarId}', PrintPreview::class)->name('print.preview.excel');
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
 
-Route::middleware(['auth', 'user'])->group(function () {
-    Route::resource('homepage', UserController::class);
+Route::middleware(['auth'])->group(function(){
     Route::resource('iar', IarController::class);
     Route::resource('stock', StockController::class);
-});
 
 
-Route::middleware(['auth'])->group(function () {
-
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -100,11 +97,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tasks/{user}/assign', [TaskController::class, 'assignForm'])->name('tasks.assignForm');
     Route::post('/tasks/{user}/assign', [TaskController::class, 'assignTask'])->name('tasks.assignTask');
 
-});
 
 // Authentication routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
@@ -139,16 +135,10 @@ Route::get('/archived/iar', [IarController::class, 'archiveIar'])->name('archive
 Route::get('/archived/{iar_id}/iar/restore', [IarController::class, 'restoreIar'])->name('restore.iar');
 Route::get('/archived/{iar_id}/item', [ItemsController::class, 'showArchived'])->name('archive.item');
 
-Route::get('/update-excel', [IarController::class, 'showForm'])->name('show.form');
-Route::post('/update-excel', [IarController::class, 'updateExcel'])->name('update.excel');
+
 
 //logout
 Route::any('/logout', [WorkerAcc::class, 'logout'])->name('logout');
-
-//file upload
-Route::get('/upload', [FileSending::class, 'showUploadForm']);
-Route::post('/upload', [FileSending::class, 'upload']);
-
 
 Route::post('update-items-stock', [ItemsController::class, 'updateItemsStock'])->name('update.items.stock');
 Route::post('update-items-property', [ItemsController::class, 'updateItemsProperty'])->name('update.items.property');
@@ -166,10 +156,56 @@ Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory
 
 Route::get('/view-stock', 'StockController@viewStock')->name('view.stock');
 
-Route::get('/admindashboard', [ChartController::class, 'index']);
-Route::get('/get-iar', [ChartController::class, 'getIar']);
-Route::get('/get-inventory-data', [ChartController::class, 'getInventoryData']);
-Route::get('/get-inventory-dates', [ChartController::class, 'getInventoryDates']);
+
+
+
+
+
+// routes/web.php
+Route::post('/generate-report', [AdminController::class, 'generate'])->name('generate.report');
+Route::post('/insert-category', [ItemsController::class, 'insertcateg'])->name('category.insert');
+Route::get('/setting', [UserController::class, 'viewsetting'])->name('setting.index');
+
+
+
+
+Route::get('download/{file}', function ($file) {
+    return Storage::download('app/' . $file);
+})->name('download');
+
+
+Route::get('/update-excel', [IarController::class, 'showForm'])->name('show.form');
+Route::post('/update-excel', [IarController::class, 'updateExcel'])->name('update.excel');
+Route::get('/chat', function() {
+    return redirect()->route('chatify');
+})->name('chat.index')->middleware('auth');
+Route::post('/messages', [MessageController::class, 'store'])->middleware('auth');
+
+});
+
+
+
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+
+
 
 require __DIR__.'/auth.php';
 
+Route::get('/admindashboard', [ChatController::class, 'index'])->name('admin.index');
+
+
+    // Other routes
+    Route::get('/get-iar', [ChartController::class, 'getIar']);
+Route::get('/get-inventory-data', [ChartController::class, 'getInventoryData']);
+Route::get('/get-inventory-dates', [ChartController::class, 'getInventoryDates']);
+
+
+Route::middleware('auth')->group(function () {
+    Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+});

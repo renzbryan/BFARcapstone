@@ -126,10 +126,6 @@
             
                     </div>
                 </div>
-        <div class="buttons">
-            <button type="submit">Save</button>
-            <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
-        </div>
             </div>
         
             <div class="grid-item" style="width: 100%">
@@ -138,11 +134,8 @@
                     <input type="text" name="iar_rcc" id="iar_rcc" readonly>
                 </div>
 
-                <!-- <div>
+                <div>
                     <label for="iar_number">IAR No.:</label>
-
-                    <input type="text" name="iar_number" id="iar_number" required>
-                </div> -->
                     <input type="text" name="iar_number" id="iar_number" value="{{ $iarNumber }}" required readonly>
                 </div>
 
@@ -161,7 +154,10 @@
                     <label for="iar_invoice_d">Date:</label>
                     <input type="date" name="iar_invoice_d" id="iar_invoice_d" required>
                 </div>
-
+                <div class="buttons">
+                    <button type="submit">Save</button>
+                    <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
+                </div>
             </div>
 
             </div>

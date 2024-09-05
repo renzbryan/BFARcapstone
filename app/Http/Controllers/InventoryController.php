@@ -63,4 +63,8 @@ class InventoryController extends Controller
         $inventories = Inventory::withTrashed()->find($id)->restore();
         return redirect()->back()->with('success', 'SUCCESSFULLY RESTORED');
     }
+
+
+
+    
 }

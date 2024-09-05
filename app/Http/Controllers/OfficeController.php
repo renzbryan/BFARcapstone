@@ -20,6 +20,6 @@ class OfficeController extends Controller
 
         BfarOffice::create($request->all());
 
-        return redirect()->route('bfar_office.create')->with('success', 'Data inserted successfully!');
+        return redirect()->route('setting.index')->with('success', 'Data inserted successfully!');
     }
 }

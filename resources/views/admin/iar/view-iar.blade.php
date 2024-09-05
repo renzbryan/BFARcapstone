@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern IAR Forms</title>
     <!-- Add Bootstrap CSS link -->
+    @livewireStyles
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
+<style>
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f8f9fa;
@@ -169,7 +170,7 @@
     display: block;
 }
 
-    </style>
+</style>
 </head>
 
 <body>
@@ -196,17 +197,46 @@
                 <p class="card-text1"><strong>{{ $data['iar_entityname'] }}</strong> </p>
                 <p class="card-text"><strong>Fund Cluster:</strong> {{ $data['iar_fundcluster'] }}</p>
                 <p class="card-text"><strong>Supplier:</strong> {{ $data['iar_supplier'] }}</p>
-
+        
                 <div class="action-column">
                     <a class="btn btn-primary" href="{{ route('item.show', $data['iar_id']) }}">View</a>
-                    <a class="btn btn-success" href="{{ route('export.excel', ['iar_id' => $data['iar_id']]) }}">Print</a>
-
+                    <button class="btn btn-success print-preview-btn" data-iar-id="{{ $data['iar_id'] }}">Print Preview</button>
                     <a class="btn btn-danger" href="{{ route('delete.iar', ['iar_id' => $data['iar_id']]) }}">Delete</a>
                 </div>
+        
+                <div class="comments-section mt-4">
+                    <h5>Comments</h5>
+                
+                    @if(empty($data['comments']))
+                        <p>No comments yet.</p>
+                    @else
+                    @foreach($data->comments as $comment)
+                    <div class="comment mb-2">
+                        <p><strong>{{ $comment->user->name }}:</strong> {{ $comment->content }}</p>
+                    </div>
+                @endforeach
+                    @endif
+                
+                    @if(auth()->user()->is_admin)
+                        <form action="{{ route('comments.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="commentable_id" value="{{ $data['iar_id'] }}">
+                            <input type="hidden" name="commentable_type" value="App\Models\Iar">
+                            <div class="form-group">
+                                <textarea name="content" class="form-control" placeholder="Add a comment" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">Add Comment</button>
+                        </form>
+                    @endif
+                </div>
+                
             </div>
         </div>
+        
+        
         @endforeach
     </div>
+    @livewireScripts
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const searchInput = document.getElementById('searchInput');
@@ -219,6 +249,13 @@
                     const cardText = card.innerText.toLowerCase();
                     const isVisible = cardText.includes(query);
                     card.style.display = isVisible ? 'block' : 'none';
+                });
+            });
+
+            document.querySelectorAll('.print-preview-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const iarId = button.getAttribute('data-iar-id');
+                    window.open("{{ route('print.preview.excel', '') }}/" + iarId, '_blank');
                 });
             });
         });

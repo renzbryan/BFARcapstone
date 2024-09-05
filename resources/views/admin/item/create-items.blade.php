@@ -90,20 +90,27 @@
 <body>
 <section>
     <div class="container">
-    <form action="{{ route('items.store', ['iar_id' => $iar_id]) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('items.store', ['iar_id' => $iar_id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div >
+            <div>
                 <div>
-                    <label for="item_name"> Name:</label>
-                    <input type="text" name="item_name" id="item_name"  required>
+                    <label for="item_name">Name:</label>
+                    <input type="text" name="item_name" id="item_name" required>
                 </div>
-
+    
                 <div>
                     <label for="item_desc">Description:</label>
                     <input type="text" name="item_desc" id="item_desc" required>
                 </div>
-
-
+                <div>
+                    <label for="category">Category:</label>
+                    <select name="category" id="category" required>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+    
                 <div>
                     <label for="item_unit">Unit:</label>
                     <select name="item_unit" id="item_unit" required>
@@ -111,12 +118,12 @@
                         <option value="bundle">bundle</option>
                     </select>
                 </div>
-
+    
                 <div>
                     <label for="item_quantity">Quantity:</label>
                     <input type="text" name="item_quantity" id="item_quantity" required>
                 </div>
-
+    
                 <button type="submit">Save</button>
                 <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
             </div>

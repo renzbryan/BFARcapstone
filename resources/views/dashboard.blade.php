@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document Management System</title>
+  <script type="module" src="{{ asset('js/firebase.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     nav.vertical-nav {
@@ -137,7 +139,8 @@
 
   <a href="#">Dashboard</a>
   <a href="{{ route('usertasks.index') }}">My Task</a>
-
+  <a href="{{ route('chat.index') }}">Chat</a>
+  <a href="{{ route('setting.index') }}">Settings</a>
   <div class="dropdown">
     <a href="#" class="dropdown-toggle">Forms</a>
     <div class="dropdown-content">
@@ -187,5 +190,18 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+@section('scripts')
+<script>
+  const messaging = firebase.messaging();
+  messaging.usePublicVapidKey("BNcEm4f5_jNq0L8wTF7bD_BNZBtx0AsgCP8dGG_TSIgs8-Dj61Hm8xbcPqr8Tydwx6e8HEl576bdmYAX8vAG8_Y")
+
+  axios.post('/api/save-token',{
+    test:'test'
+  }).then(res=>{
+    console.log(res);
+  });
+</script>
+@endsection
 </body>
 </html>

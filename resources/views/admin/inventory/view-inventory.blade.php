@@ -150,7 +150,7 @@
                 @foreach ($itemsWithIar as $item)
                 <tr>
                     <td>{{ $item->item_name }}</td>
-                    <td>{{ $item->item_desc }}</td>
+                    <td>{{ $item->category }}</td>
                     <td>{{ $item->item_quantity }}</td>
                     <td>{{ $item->item_unit }}</td>
                     <td>{{ $item->iar->iar_rod ?? 'N/A' }}</td>

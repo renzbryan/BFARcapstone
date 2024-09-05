@@ -11,4 +11,8 @@ class UserController extends Controller
         $user = Auth::user();
         return view('user.homepage', compact('user'));
     }
+
+    public function viewsetting(){
+        return view('user.setting');
+    }
 }

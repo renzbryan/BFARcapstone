@@ -16,7 +16,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 class IarController extends Controller
 {
     public function index(){
-        $iars = Iar::get();
+        $iars = Iar::with(['comments.user'])->get();
         return view('admin.iar.view-iar', compact('iars'));
     }
 
@@ -96,7 +96,7 @@ class IarController extends Controller
         $spreadsheet->getActiveSheet()->setCellValue('G51', $updatedValue);
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save($filePath);
-        return redirect()->route('show.form')->with('success', 'IAR excel file updated successfully!');
+        return redirect()->route('setting.index')->with('success', 'IAR excel file edited successfully!');
     }
 
 
@@ -118,6 +118,8 @@ class IarController extends Controller
         Item::where('iar_id', $iar_id)->withTrashed()->restore();
         return redirect('iar')->with('success', 'Iar and associated items restored successfully.');
     }
-
+    public function test(){
+        return view('test');
+    }
     
 }

@@ -138,3 +138,9 @@
         </div>
     </body>
 </html>
+
+    <script>
+  const messaging = firebase.messaging();
+  messaging.usePublicVapidKey("BNcEm4f5_jNq0L8wTF7bD_BNZBtx0AsgCP8dGG_TSIgs8-Dj61Hm8xbcPqr8Tydwx6e8HEl576bdmYAX8vAG8_Y")
+  
+</script>

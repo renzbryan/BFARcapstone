@@ -11,23 +11,34 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
+
     public function login(Request $request)
     {
+        // Validate the login credentials
         $credentials = $request->only('email', 'password');
+
         if (Auth::attempt($credentials)) {
+            // Authentication passed, redirect to role-based page
             return $this->redirectToRole(Auth::user());
         }
 
-        return redirect()->back()->withInput($request->only('email'));
+        // Authentication failed, redirect back with email input
+        return redirect()->back()->withInput($request->only('email'))->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 
     protected function redirectToRole($user)
     {
-        if ($user->isAdmin()) {
-            return redirect()->route('tasks.index');
-        } elseif ($user->isUser()) {
+        logger($user->role); // Log the user's role to the Laravel log
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.index');
+        } elseif ($user->role === 'user') {
             return redirect()->route('homepage.index');
         }
+    
+        // Default redirection if no specific role matched
+        return redirect('/');
     }
 
     public function logout(Request $request)
@@ -38,5 +49,4 @@ class LoginController extends Controller
 
         return redirect('login');
     }
-
 }

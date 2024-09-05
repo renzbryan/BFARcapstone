@@ -22,5 +22,8 @@ public function items()
 {
     return $this->hasMany(Item::class, 'iar_id', 'iar_id');
 }
-
+public function comments()
+{
+    return $this->morphMany(Comment::class, 'commentable');
+}
 }

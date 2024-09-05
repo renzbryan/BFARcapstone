@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Iar;
+use App\Models\CategoryModel;
 
 class ItemsController extends Controller
 {
@@ -32,17 +33,20 @@ class ItemsController extends Controller
     }  
 
 
-    public function create(){
-        $items = Item::get();
+    public function create()
+    {
+        $items = Item::all();
+        
+        
         return view('admin.item.create-items', compact('items'));
     }
-
     public function store(Request $request, $iar_id){
         $request->validate([ 
             'item_name' => 'required',
             'item_desc' => 'required',
             'item_unit' => 'required',
             'item_quantity' => 'required',
+            'category' => 'required',
         ]);
     
         $items = new Item;
@@ -58,8 +62,9 @@ class ItemsController extends Controller
     }
     
     public function addItemForm($iar_id){
+        $categories = CategoryModel::all(); // Fetch all categories from the database
         $iar = IAR::find($iar_id);
-        return view('admin.item.create-items', ['iar' => $iar, 'iar_id' => $iar_id]);
+        return view('admin.item.create-items', ['iar' => $iar, 'iar_id' => $iar_id,'categories'=>$categories]);
     }
 
     public function showArchived($iar_id)
@@ -118,4 +123,23 @@ public function updateItemsStock(Request $request)
             return response()->json(['success' => false, 'message' => 'No items selected.']); 
         } 
     }
+
+
+    public function insertcateg(Request $request)
+    {
+        // Validate the request if needed
+        $validatedData = $request->validate([
+            'category' => 'required|string|max:255',
+        ]);
+
+        // Insert the category into the database
+        CategoryModel::create([
+            'name' => $request->input('category'),
+        ]);
+
+        // Redirect back with success message
+        return redirect()->route('setting.index')->with('success-category', 'Category inserted successfully!');
+    }
+
+    
 }

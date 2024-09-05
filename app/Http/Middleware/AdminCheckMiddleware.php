@@ -16,8 +16,8 @@ class AdminCheckMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->isAdmin()) {
-            return $next($request);
+        if (Auth::check() && Auth::user()->is_admin) {
+            abort(code:403);
         }
 
         return redirect('/'); // Redirect unauthorized users to home
