@@ -16,11 +16,11 @@ class AdminCheckMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->is_admin) {
+        if (Auth::check() && Auth::user()->is_admin == 1) {
             abort(code:403);
         }
 
-        return redirect('/'); // Redirect unauthorized users to home
+        return redirect('/login'); 
     }
      
 

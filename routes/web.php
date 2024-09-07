@@ -119,6 +119,10 @@ Route::get('/stock', [StockController::class, 'index'])->name('stock.index');
 Route::resources([
     'rlsddsp' => RLSDDSPController::class,
 ]);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
 
 Route::get('/iar/{iar_id}/create-items', [ItemsController::class, 'addItemForm'])->name('items.create');
 Route::post('/iar/{iar_id}/create-items', [ItemsController::class, 'store'])->name('items.store');
@@ -187,16 +191,12 @@ Route::post('/messages', [MessageController::class, 'store'])->middleware('auth'
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
 
 
 
 require __DIR__.'/auth.php';
 
-Route::get('/admindashboard', [ChatController::class, 'index'])->name('admin.index');
+Route::get('/admindashboard', [ChatController::class, 'index'])->name('admin.index')->middleware('admin');
 
 
     // Other routes
