@@ -18,7 +18,31 @@ class ItemsController extends Controller
     
         return view('admin.item.view-items', compact('items', 'iars'));
     }
+    public function checkProperty(Request $request)
+    {
+        $items = $request->input('items');
+        $itemsWithProperty = Item::whereIn('item_id', $items)
+                                 ->whereNotNull('property')
+                                 ->count();
     
+        return response()->json(['hasProperty' => $itemsWithProperty > 0]);
+    }
+    public function updateProperty(Request $request)
+    {
+        $items = $request->input('items');
+        $userAccount = auth()->user()->name; 
+    
+        if (!empty($items)) {
+            Item::whereIn('item_id', $items)
+                ->update(['property' => $userAccount]);
+    
+            return response()->json(['message' => 'Property updated successfully.'], 200);
+        }
+    
+        return response()->json(['message' => 'No items selected.'], 400);
+    }
+    
+
     
     
 
@@ -86,8 +110,7 @@ public function updateItemsStock(Request $request)
         $itemIds = $request->input('item_ids', []); 
  
         if (!empty($itemIds)) { 
-            // Assuming your model is named 'Item' and the table is 'items_tbl' 
-            // Update 'is_stock' column to 1 for selected items 
+
             Item::whereIn('item_id', $itemIds)->update(['is_stock' => 1]); 
  
             return response()->json(['success' => true]); 

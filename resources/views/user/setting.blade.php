@@ -232,24 +232,34 @@
   
       <div class="col-md-6">
         <div class="settings-form">
-          <h2>Update Excel</h2>
-  
-          @if(session('success'))
-            <div class="alert alert-success">
-              {{ session('success') }}
-            </div>
-          @endif
-  
-          <form action="{{ route('update.excel') }}" method="post">
-            @csrf
-            <div class="form-group">
-              <label for="updated_value">OIC, Property & Supply Officer:</label>
-              <input type="text" name="updated_value" class="form-control" style="text-transform: uppercase;">
-            </div>
-            <button type="submit" class="btn btn-primary">Update</button>
-          </form>
+            <h2>Update Excel</h2>
+    
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+    
+            <form action="{{ route('update.excel') }}" method="post">
+                @csrf
+                <div class="form-group">
+                    <label for="excel_file">Select Excel File:</label>
+                    <select name="excel_file" class="form-control">
+                        <option value="iar">IAR.xlsx</option>
+                        <option value="another_excel">Another_Excel.xlsx</option>
+                        <option value="yet_another_excel">Yet_Another_Excel.xlsx</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label for="updated_value">OIC, Property & Supply Officer:</label>
+                    <input type="text" name="updated_value" class="form-control" style="text-transform: uppercase;">
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
         </div>
-      </div>
+    </div>
+    
       <div class="col-md-6">
         <div class="settings-form">
           <h2>Add a Category</h2>

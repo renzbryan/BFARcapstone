@@ -20,18 +20,21 @@ class IarController extends Controller
         return view('admin.iar.view-iar', compact('iars'));
     }
 
-    public function create()
-    {
-        $iar= new Iar();
-        $iars = Iar::get();
-        $model = new BfarOffice();
-        $officeOptions = $model->getOptions();
-        $lastInsertedId = $iar->iar_id;
-
-        // Generate the IAR number
-        $iarNumber = 'IAR-' . str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
-        return view('admin.iar.create-iar', compact('iars', 'officeOptions','iarNumber'));
-    }
+        public function create()
+        {
+            $lastIar = Iar::orderBy('iar_id', 'desc')->first();
+            if ($lastIar) {
+                $lastInsertedId = $lastIar->iar_id;
+            } else {
+                $lastInsertedId = 0; 
+            }
+            $iarNumber = 'IAR-' . str_pad($lastInsertedId + 1, 4, '0', STR_PAD_LEFT);
+            $model = new BfarOffice();
+            $officeOptions = $model->getOptions();
+            $iars = Iar::get();
+            return view('admin.iar.create-iar', compact('iars', 'officeOptions', 'iarNumber'));
+        }
+    
     public function getOfficeCode($id)
     {
         $model = new BfarOffice();
@@ -90,14 +93,26 @@ class IarController extends Controller
     }
     public function updateExcel(Request $request)
     {
-        $filePath = storage_path('app/IAR.xlsx');
+        $selectedFile = $request->input('excel_file');
+        $filePaths = [
+            'iar' => storage_path('app/IAR.xlsx'),
+            'another_excel' => storage_path('app/Another_Excel.xlsx'),
+            'yet_another_excel' => storage_path('app/Yet_Another_Excel.xlsx'),
+        ];
+        if (!array_key_exists($selectedFile, $filePaths)) {
+            return redirect()->back()->with('error', 'Invalid file selected.');
+        }
+    
+        $filePath = $filePaths[$selectedFile];
         $spreadsheet = IOFactory::load($filePath);
         $updatedValue = strtoupper($request->input('updated_value'));
         $spreadsheet->getActiveSheet()->setCellValue('G51', $updatedValue);
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save($filePath);
-        return redirect()->route('setting.index')->with('success', 'IAR excel file edited successfully!');
+    
+        return redirect()->route('setting.index')->with('success', ucfirst($selectedFile).' Excel file edited successfully!');
     }
+    
 
 
     public function deleteIar($iar_id){

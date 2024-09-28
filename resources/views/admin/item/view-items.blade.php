@@ -275,6 +275,7 @@
         <button id="Stockbtn" class="custom-btn">Stock Card</button>
         <button id="Propertybtn">Property Card</button>
         <button id="WMRbtn">WMR</button>
+        <button id="Semibtn">Semi-property Card</button>
         <a class="add-item-btn" href="/iar/{{ $iar->iar_id }}/create-items">+ New Item</a>
     </div>
 </header>
@@ -325,8 +326,7 @@
                 <td>{{ $data->item_unit }}</td> 
                 <td>{{ $data->item_quantity }}</td> 
                 <td> 
-                    <!-- Add any action buttons or links here if needed --> 
-                    {{-- Example: --}} 
+
                     <a href="#">Edit</a> 
                     <a href="#">Delete</a> 
                 </td> 
@@ -349,5 +349,58 @@
     </footer>
 
 </body>
+<script>
+    document.getElementById('Semibtn').addEventListener('click', function() {
+        // Get all checked items
+        let checkedItems = [];
+        document.querySelectorAll('input[name="item_checkbox[]"]:checked').forEach(item => {
+            checkedItems.push(item.value);
+        });
+
+        if (checkedItems.length === 0) {
+            alert('Please select at least one item.');
+            return;
+        }
+        fetch('/check-property', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                items: checkedItems
+            })
+        }).then(response => response.json())
+          .then(data => {
+              if (data.hasProperty) {
+                  alert('One or more items already have a property assigned.');
+              } else {
+                  fetch('/update-property', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                          'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                      },
+                      body: JSON.stringify({
+                          items: checkedItems
+                      })
+                  }).then(updateResponse => {
+                      if (updateResponse.ok) {
+                          alert('Property updated successfully.');
+                          location.reload(); // Reload to reflect changes
+                      } else {
+                          alert('Error updating property.');
+                      }
+                  }).catch(error => {
+                      console.error('Error:', error);
+                      alert('An error occurred.');
+                  });
+              }
+          }).catch(error => {
+              console.error('Error:', error);
+              alert('An error occurred.');
+          });
+    });
+</script>
 
 </html>

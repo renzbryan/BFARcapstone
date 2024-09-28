@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('iar_tbl', function (Blueprint $table) {
-            $table->string('iar_number', 255)->change(); // Change to VARCHAR with length 255
+            $table->string('iar_number', 255)->change(); 
         });
     }
 

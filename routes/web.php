@@ -22,6 +22,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Livewire\PrintPreview;
 
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PDFcontroller;
 use App\Models\User;
 /*
 |--------------------------------------------------------------------------
@@ -134,12 +135,16 @@ Route::get('/test/printexcel/{iar_id}', [IarController::class, 'downloadExcel'])
 
 Route::get('/iar/delete/{iar_id}', [IarController::class, 'deleteIar'])->name('delete.iar');
 
+
+Route::get('/export-pdf/{id}', [PDFcontroller::class, 'exportPdf'])->name('export.pdf');
 //archive
 Route::get('/archived/iar', [IarController::class, 'archiveIar'])->name('archive.iar');
 Route::get('/archived/{iar_id}/iar/restore', [IarController::class, 'restoreIar'])->name('restore.iar');
 Route::get('/archived/{iar_id}/item', [ItemsController::class, 'showArchived'])->name('archive.item');
 
 
+Route::post('/update-property', [ItemsController::class, 'updateProperty']);
+Route::post('/check-property', [ItemsController::class, 'checkProperty']);
 
 //logout
 Route::any('/logout', [WorkerAcc::class, 'logout'])->name('logout');
@@ -196,7 +201,7 @@ Route::post('/messages', [MessageController::class, 'store'])->middleware('auth'
 
 require __DIR__.'/auth.php';
 
-Route::get('/admindashboard', [ChatController::class, 'index'])->name('admin.index')->middleware('admin');
+Route::get('/admindashboard', [ChatController::class, 'index'])->name('admin.index');
 
 
     // Other routes
