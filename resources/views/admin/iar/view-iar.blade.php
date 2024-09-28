@@ -220,7 +220,6 @@
                 @endforeach
             @endif
         
-            @if(auth()->user()->is_admin)
                 <form action="{{ route('comments.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="commentable_id" value="{{ $data['iar_id'] }}">
@@ -230,7 +229,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary mt-2">Add Comment</button>
                 </form>
-            @endif
+
         </div>
         
     </div>
