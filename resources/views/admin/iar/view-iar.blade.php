@@ -203,7 +203,7 @@
 
         <div class="action-column">
             <a class="btn btn-primary" href="{{ route('item.show', $data['iar_id']) }}">View</a>
-            <a href="{{ route('export.pdf', ['id' => $data['iar_id']]) }}" class="btn btn-primary">View PDF</a>
+            <a href="{{ route('export.pdf', ['id' => $data['iar_id']]) }}" class="btn btn-primary" target="_blank">View PDF</a>
             <a class="btn btn-danger" href="{{ route('delete.iar', ['iar_id' => $data['iar_id']]) }}">Delete</a>
         </div>
 
@@ -261,19 +261,15 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.btn-primary').forEach(button => {
-            button.addEventListener('click', function(event) {
-                if (this.innerText === 'View PDF') {
-                    event.preventDefault(); // Prevent default link behavior
+        document.querySelectorAll('.view-pdf-btn').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
                     const pdfUrl = this.href;
 
-                    // Make an AJAX request to generate and download PDF
                     fetch(pdfUrl)
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                // Redirect to the PDF link
                                 window.open(data.link, '_blank');
                             } else {
                                 alert('Failed to generate PDF: ' + data.message);
@@ -282,11 +278,8 @@
                         .catch(() => {
                             alert('Error occurred while generating PDF.');
                         });
-                }
+                });
             });
-        });
-    });
-        
     </script>
 </body>
 
