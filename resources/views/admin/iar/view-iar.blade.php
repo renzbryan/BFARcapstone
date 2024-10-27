@@ -204,6 +204,7 @@
         <div class="action-column">
             <a class="btn btn-primary" href="{{ route('item.show', $data['iar_id']) }}">View</a>
             <a href="{{ route('export.pdf', ['id' => $data['iar_id']]) }}" class="btn btn-primary" target="_blank">View PDF</a>
+            <a href="{{ route('export.excel', ['iar_id' => $data['iar_id']]) }}"class="btn btn-primary">Excel</a>
             <a class="btn btn-danger" href="{{ route('delete.iar', ['iar_id' => $data['iar_id']]) }}">Delete</a>
         </div>
 

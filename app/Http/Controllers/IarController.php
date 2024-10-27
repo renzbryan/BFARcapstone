@@ -80,11 +80,21 @@ class IarController extends Controller
     
 
 
-    public function downloadExcel($id)
+    public function downloadExcel($rowId)
     {
-            $rowID = Iar::find($id);
-            $export = new ExportExc($rowID->iar_id);
+        try {
+            // Create an instance of your ExportExc class with the given row ID
+            $export = new ExportExc($rowId);
+
+            // Call the export method to download the Excel file
             return $export->export();
+        } catch (\Exception $e) {
+            Log::error('Error exporting Excel: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while exporting the Excel file.'
+            ], 500);
+        }
     }
 
     public function showForm()
