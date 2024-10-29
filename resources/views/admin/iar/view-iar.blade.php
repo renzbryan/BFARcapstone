@@ -242,15 +242,15 @@
             const searchInput = document.getElementById('searchInput');
             const iarCards = document.querySelectorAll('.iar-card');
 
-            searchInput.addEventListener('input', function () {
-                const query = searchInput.value.toLowerCase();
+        searchInput.addEventListener('input', function () {
+            const query = searchInput.value.toLowerCase();
 
-                iarCards.forEach(function (card) {
-                    const cardText = card.innerText.toLowerCase();
-                    const isVisible = cardText.includes(query);
-                    card.style.display = isVisible ? 'block' : 'none';
-                });
+            iarCards.forEach(function (card) {
+                const cardText = card.innerText.toLowerCase();
+                const isVisible = cardText.includes(query);
+                card.style.display = isVisible ? 'block' : 'none';
             });
+        });
 
             document.querySelectorAll('.print-preview-btn').forEach(button => {
                 button.addEventListener('click', function() {
@@ -261,5 +261,3 @@
         });
     </script>
 </body>
-
-</html>

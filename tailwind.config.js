@@ -12,10 +12,10 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                roboto: ['Roboto', 'sans-serif'],
+                nunito: ['Nunito', 'sans-serif']
             },
         },
     },
-
     plugins: [forms],
 };
