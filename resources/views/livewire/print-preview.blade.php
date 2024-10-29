@@ -1,12 +1,27 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Excel Print Preview</title>
     <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            margin-left: 20%;
+        }
+        .container {
+            width: calc(100% - 2rem);
+            margin: 0 auto;
+            padding: 1.25rem;
+            background-color: #ffffff;
+            border-top: 4px solid #0033cc; /* Blue-900 */
+            border-radius: 0.375rem; /* Rounded-md */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow-lg */
+        }
         table {
             border-collapse: collapse;
             width: 100%;
+            margin-top: 3rem; /* Add some spacing from top */
         }
         th, td {
             border: 1px solid #dddddd;
@@ -19,7 +34,7 @@
     </style>
 </head>
 <body>
-    <div>
+    <div class="container">
         <h2>Excel Print Preview</h2>
         <table>
             <thead>

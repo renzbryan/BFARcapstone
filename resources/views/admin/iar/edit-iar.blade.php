@@ -61,22 +61,22 @@
 </head>
 <body>
     <section>
-        <form action="{{ route('iar.update', $iars->id)}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('iar.update', $iars->id) }}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <input type="hidden" name="id" id="id" value="{{ $iars->id }}"/>
 
             <label for="item_name">Item Name:</label>
-            <input type="text" name="item_name" id="item_name" value="{{ $iars->item_name }}"/>
+            <input type="text" name="item_name" id="item_name" value="{{ $iars->item_name }}" />
 
             <label for="description">Description:</label>
-            <input type="text" name="description" id="description" value="{{ $iars->description }}"/>
+            <input type="text" name="description" id="description" value="{{ $iars->description }}" />
 
             <label for="unit">Unit:</label>
-            <input type="text" name="unit" id="unit" value="{{ $iars->unit }}"/>
+            <input type="text" name="unit" id="unit" value="{{ $iars->unit }}" />
 
             <label for="quantity">Quantity:</label>
-            <input type="text" name="quantity" id="quantity" value="{{ $iars->quantity }}"/>
+            <input type="text" name="quantity" id="quantity" value="{{ $iars->quantity }}" />
 
             <button type="submit">Update</button>
             <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>

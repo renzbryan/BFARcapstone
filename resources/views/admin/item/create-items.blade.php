@@ -1,136 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+@extends('layouts.app')
 
-<style>
-        * {
-            box-sizing: border-box;
-        }
+@section('title', 'Create BFAR Office')
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        section {
-            padding: 50px;
-            text-align: left;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border-radius: 5px;
-            border: 2px solid #333;
-            background-color: #f8f9fa;
-        }
-
-        form {
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-gap: 20px;
-            padding: 10px;
-        }
-
-        .grid-item {
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        input {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        select {
-            width: 97%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100px;
-        }
-
-        .cancel-btn {
-            background-color: #dc3545;
-        }
-
-
-    </style>
-
-<body>
-<section>
-    <div class="container">
+@section('content')
+<div class="container mx-auto p-4 mt-8 ml-48 lg:p-12 font-nunito">
+    <div class="bg-white shadow-lg rounded-lg p-8">
         <form action="{{ route('items.store', ['iar_id' => $iar_id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
                 <div>
-                    <label for="item_name">Name:</label>
-                    <input type="text" name="item_name" id="item_name" required>
+                    <div class="mb-4">
+                        <label for="item_name" class="block text-gray-700 font-semibold mb-2">Name:</label>
+                        <input type="text" name="item_name" id="item_name" class="w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="item_desc" class="block text-gray-700 font-semibold mb-2">Description:</label>
+                        <input type="text" name="item_desc" id="item_desc" class="w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="category" class="block text-gray-700 font-semibold mb-2">Category:</label>
+                        <select name="category" id="category" class="w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-    
+                
                 <div>
-                    <label for="item_desc">Description:</label>
-                    <input type="text" name="item_desc" id="item_desc" required>
+                    <div class="mb-4">
+                        <label for="item_unit" class="block text-gray-700 font-semibold mb-2">Unit:</label>
+                        <select name="item_unit" id="item_unit" class="w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <option value="set">set</option>
+                            <option value="bundle">bundle</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="item_quantity" class="block text-gray-700 font-semibold mb-2">Quantity:</label>
+                        <input type="text" name="item_quantity" id="item_quantity" class="w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Save</button>
+                        <button type="button" class="bg-red-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500" onclick="window.history.back()">Cancel</button>
+                    </div>
                 </div>
-                <div>
-                    <label for="category">Category:</label>
-                    <select name="category" id="category" required>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-    
-                <div>
-                    <label for="item_unit">Unit:</label>
-                    <select name="item_unit" id="item_unit" required>
-                        <option value="set">set</option>
-                        <option value="bundle">bundle</option>
-                    </select>
-                </div>
-    
-                <div>
-                    <label for="item_quantity">Quantity:</label>
-                    <input type="text" name="item_quantity" id="item_quantity" required>
-                </div>
-    
-                <button type="submit">Save</button>
-                <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
             </div>
         </form>
     </div>
-    </section>
+</div>
 
-</body>
-
-</html>
+    @endsection

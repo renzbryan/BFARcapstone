@@ -26,4 +26,15 @@ public function comments()
 {
     return $this->morphMany(Comment::class, 'commentable');
 }
+
+
+public function stockItems()
+{
+    return $this->hasMany(StockItem::class, 'iar_id');
+}
+
+public function scitems()
+{
+    return $this->hasMany(Scitem::class, 'iar_id');
+}
 }

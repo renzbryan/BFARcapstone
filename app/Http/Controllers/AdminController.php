@@ -3,21 +3,24 @@
 namespace App\Http\Controllers;
 
 use Dompdf\Dompdf;
-use Dompdf\Options;
 use Illuminate\Http\Request;
 use App\Models\Item;
+
 class AdminController extends Controller
 {
-    public function dashboard(){
+    // Dashboard View
+    public function dashboard()
+    {
         return view('admin.task.assigntask');
     }
 
+    // Generate Reports (CSV & PDF)
     public function generate(Request $request)
     {
-        // Retrieve inventory data
+        // Retrieve Inventory Data
         $items = Item::all();
     
-        // Define column labels
+        // Define Column Labels
         $header = [
             'Item Name',
             'Item Description',
@@ -28,7 +31,7 @@ class AdminController extends Controller
             'Is WMR',
         ];
     
-        // Process data to generate report
+        // Process Data to Generate Report
         $reportData = [];
         foreach ($items as $item) {
             $isStock = $item->is_stock == 1 ? 'Yes' : 'No';
@@ -46,18 +49,18 @@ class AdminController extends Controller
             ];
         }
     
-        // Format the CSV report data
-        $csvFormattedData = implode(',', $header) . PHP_EOL; // Add header row
+        // Format the CSV Report Data
+        $csvFormattedData = implode(',', $header) . PHP_EOL; // Add Header Row
         foreach ($reportData as $row) {
             $csvFormattedData .= implode(',', $row) . PHP_EOL;
         }
     
-        // Generate and download the CSV report
+        // Generate and Save the CSV Report
         $csvFileName = 'inventory_report.csv';
         $csvFilePath = storage_path('app/' . $csvFileName);
         file_put_contents($csvFilePath, $csvFormattedData);
     
-        // Generate and download the PDF report
+        // Generate and Save the PDF Report
         $pdfFileName = 'inventory_report.pdf';
         $pdfFilePath = storage_path('app/' . $pdfFileName);
         $dompdf = new Dompdf();
@@ -66,11 +69,10 @@ class AdminController extends Controller
         $dompdf->render();
         file_put_contents($pdfFilePath, $dompdf->output());
     
-        // Return download links or redirect to download page
+        // Return Download Links or Redirect to Download Page
         return response()->json([
             'csv_download_link' => route('download', ['file' => $csvFileName]),
             'pdf_download_link' => route('download', ['file' => $pdfFileName]),
         ]);
     }
-    
 }

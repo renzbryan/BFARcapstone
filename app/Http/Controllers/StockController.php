@@ -3,29 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\StockItem;
 use App\Models\Iar;
-use App\Exports\ExportExc;
-use App\Models\Item;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\ExcelImport;
-use App\Models\BfarOffice;
-use Illuminate\Support\Facades\Log;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class StockController extends Controller
 {
-
-    // public function index(){
-    //     $stocks = Item::get();
-    //     return view('admin.stock.view-stock', compact('stock'));
-    // }
-
+    /**
+     * Display a listing of items with stock information.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
-        // Fetch items where is_stock column is not null
-        $stockEntries = Item::whereNotNull('is_stock')->get();
+        // Fetch all stock entries with their related IAR
+        $stockEntries = StockItem::with('iar')->get();
     
         // Pass the data to the view and return the view
         return view('admin.stock.view-stock', compact('stockEntries'));
     }
+    
 }
