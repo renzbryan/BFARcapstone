@@ -22,46 +22,46 @@
         <label for="updated_value" class="block text-gray-700 font-bold mb-2">OIC, Property & Supply Officer:</label>
         <input type="text" name="updated_value" id="updated_value" class="w-full border-gray-300 rounded-md uppercase focus:outline-none focus:ring-2 focus:ring-blue-500">
       </div>
-
-      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 active:bg-blue-800">Update</button>
-    </form>
-  </div>
-
-   <!-- Add Category Form -->
-   <div class="w-full md:w-1/2 border-t-4 border-blue-900 bg-white p-6 rounded-md shadow-lg">
-      <h2 class="text-xl font-bold mb-4">Add a Category</h2>
-
-      @if(session('success-category'))
-        <div class="bg-green-500 text-white p-4 rounded-md mb-4">
-          {{ session('success-category') }}
+  
+      <div class="col-md-6">
+        <div class="settings-form">
+          <h2>Update Excel</h2>
+  
+          @if(session('success'))
+            <div class="alert alert-success">
+              {{ session('success') }}
+            </div>
+          @endif
+  
+          <form action="{{ route('update.excel') }}" method="post">
+            @csrf
+            <div class="form-group">
+              <label for="updated_value">OIC, Property & Supply Officer:</label>
+              <input type="text" name="updated_value" class="form-control" style="text-transform: uppercase;">
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
         </div>
-      @endif
-
-      <form action="{{ route('category.insert') }}" method="post">
-        @csrf
-        <div class="mb-4">
-          <label for="category" class="block text-gray-700 font-bold mb-2">Inventory Category:</label>
-          <input type="text" name="category" id="category" class="w-full border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 active:bg-blue-800">Insert</button>
-      </form>
-    </div>
-
-     <!-- Create BFAR Office Form -->
-  <div class="w-full md:w-1/2 border-t-4 border-blue-900 bg-white p-6 rounded-md shadow-lg">
-    <h2 class="text-xl font-bold mb-4">Create BFAR Office</h2>
-    @if(session('success-office'))
-      <div class="bg-green-500 text-white p-4 rounded-md mb-4">
-        {{ session('success-office') }}
       </div>
-    @endif
- 
-    <form method="POST" action="{{ route('bfar_office.store') }}">
-      @csrf
-      <div class="mb-4">
-        <label for="office" class="block text-gray-700 font-bold mb-2">Office:</label>
-        <input type="text" name="office" id="office" class="w-full border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <div class="col-md-6">
+        <div class="settings-form">
+          <h2>Add a Category</h2>
+  
+          @if(session('success-category'))
+            <div class="alert alert-success">
+              {{ session('success-category') }}
+            </div>
+          @endif
+  
+          <form action="{{ route('category.insert') }}" method="post">
+            @csrf
+            <div class="form-group">
+              <label for="category">Inventory Category:</label>
+              <input type="text" name="category" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Insert</button>
+          </form>
+        </div>
       </div>
       
       <div class="mb-4">

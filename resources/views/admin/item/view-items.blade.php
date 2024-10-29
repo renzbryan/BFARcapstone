@@ -81,15 +81,15 @@ document.addEventListener('DOMContentLoaded', function () {
 @section('content')
 <div class="container mx-auto p-4 mt-8 ml-48 lg:p-12 font-nunito">
     @foreach($iars as $iar)
-    <header class="mb-8">
-        <div class="flex space-x-4 mb-4">
-            <button class="bg-red-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500" onclick="window.history.back()">← Back</button>
-            <button id="Stockbtn" class="bg-blue-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Stock Card</button>
-            <button id="Propertybtn" class="bg-green-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">Property Card</button>
-            <button id="WMRbtn" class="bg-gray-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">WMR</button>
-            <a class="bg-yellow-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500" href="/iar/{{ $iar->iar_id }}/create-items">+ New Item</a>
-        </div>
-    </header>
+    <header>
+    <div class="header-buttons">
+        <button class="cancel-btn" onclick="window.history.back()">< Back</button>
+        <button id="Stockbtn" class="custom-btn">Stock Card</button>
+        <button id="Propertybtn">Property Card</button>
+        <button id="WMRbtn">WMR</button>
+        <a class="add-item-btn" href="/iar/{{ $iar->iar_id }}/create-items">+ New Item</a>
+    </div>
+</header>
 
     <div class="bg-white border-t-4 border-blue-900 shadow-lg rounded-lg p-8 mb-8">
         <h2 class="text-xl font-semibold mb-4">INSPECTION AND ACCEPTANCE REPORT</h2>
@@ -109,41 +109,51 @@ document.addEventListener('DOMContentLoaded', function () {
                 <p class="text-gray-700 font-semibold"><strong>Invoice Date:</strong> {{ $iar->iar_invoice_d }}</p>
             </div>
         </div>
+        @endforeach
+
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Unit</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach ($items as $data) 
+            <tr> 
+                <td><input type="checkbox" name="item_checkbox[]" value="{{ $data->item_id }}"></td> 
+                <td>{{ $data->item_name }}</td> 
+                <td>{{ $data->item_desc }}</td> 
+                <td>{{ $data->item_unit }}</td> 
+                <td>{{ $data->item_quantity }}</td> 
+                <td> 
+                    <!-- Add any action buttons or links here if needed --> 
+                    {{-- Example: --}} 
+                    <a href="#">Edit</a> 
+                    <a href="#">Delete</a> 
+                </td> 
+            </tr> 
+        @endforeach
+            </tbody>
+        </table>
     </div>
 
-    <div class="bg-white border-t-4 border-blue-900 shadow-lg rounded-lg p-8">
-        <form id="transferForm">
-            <table class="min-w-full bg-white border border-gray-300 rounded-md">
-                <thead class="bg-gray-200 text-gray-700">
-                    <tr>
-                        <th class="py-3 px-4 border-b">Select</th>
-                        <th class="py-3 px-4 border-b">Name</th>
-                        <th class="py-3 px-4 border-b">Description</th>
-                        <th class="py-3 px-4 border-b">Unit</th>
-                        <th class="py-3 px-4 border-b">Quantity</th>
-                        <th class="py-3 px-4 border-b">Transfer Quantity</th>
-                        <th class="py-3 px-4 border-b">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($items as $data)
-                    <tr class="hover:bg-gray-100">
-                        <td class="py-3 px-4 border-b"><input type="checkbox" name="item_checkbox[]" value="{{ $data->item_id }}"></td>
-                        <td class="py-3 px-4 border-b">{{ $data->item_name }}</td>
-                        <td class="py-3 px-4 border-b">{{ $data->item_desc }}</td>
-                        <td class="py-3 px-4 border-b">{{ $data->item_unit }}</td>
-                        <td class="py-3 px-4 border-b">{{ $data->item_quantity }}</td>
-                        <td class="py-3 px-4 border-b"><input type="number" name="transfer_quantity[]" min="1" max="{{ $data->item_quantity }}" class="w-full border-gray-300 rounded-md"></td>
-                        <td class="py-3 px-4 border-b">
-                            <a href="#" class="text-blue-500 hover:underline">Edit</a>
-                            <a href="#" class="text-red-500 hover:underline ml-2">Delete</a>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </form>
-    </div>
-    @endforeach
-</div>
-@endsection
+    <footer>
+        <div class="footer-dropdown">
+            <span>Menu</span>
+            <div class="dropdown-content">
+                <a class="dropdown-item" href="#">Privacy Policy</a>
+                <a class="dropdown-item" href="#">Terms of Service</a>
+                <a class="dropdown-item" href="#">Contact Us</a>
+                <a class="dropdown-item" href="{{ route('export.excel', ['iar_id' => $iar['iar_id']]) }}">Print</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

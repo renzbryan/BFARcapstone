@@ -179,11 +179,7 @@
   <a href="{{ route('profile.edit') }}">Profile</a>
   <a href="{{ route('logout') }}">Logout</a>
 </nav>
-
-
-<!-- Main Content -->
 <div class="container">
-  <!-- Chart containers for analytics -->
   <div class="chart-container">
     <canvas id="myChart"></canvas>
   </div>
@@ -205,11 +201,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
-  // JavaScript code for fetching data and creating charts
   fetch('/get-inventory-data')
     .then(response => response.json())
     .then(data => {
-      // Extract item names and quantities
       const itemNames = data.map(item => item.item_name);
       const itemQuantities = data.map(item => item.item_quantity);
 

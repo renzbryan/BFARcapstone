@@ -27,15 +27,12 @@ class ItemsController extends Controller
         
         return view('admin.item.view-items', compact('items', 'iars'));
     }
+    
+    
+    
 
-    /**
-     * Show items related to a specific IAR.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
-     */
-    public function show($id)
-    {
+    // para makuha ang id ng iar
+    public function show($id){
         $iars = Iar::where('iar_tbl.iar_id', '=', $id)->get();
         $items = Item::leftJoin('iar_tbl', 'items_tbl.iar_id', '=', 'iar_tbl.iar_id')
             ->select('items_tbl.*', 'iar_tbl.*')
@@ -116,30 +113,50 @@ class ItemsController extends Controller
         return view('admin.item.archived-item', compact('trashedItems', 'iars'));
     }
 
-    // /**
-    //  * Update the stock status of selected items.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\JsonResponse
-    //  */
-    // public function updateItemsStock(Request $request)
-    // {
-    //     $itemIds = $request->input('item_ids', []);
+public function updateItemsStock(Request $request) 
+    { 
+        $itemIds = $request->input('item_ids', []); 
+ 
+        if (!empty($itemIds)) { 
+            // Assuming your model is named 'Item' and the table is 'items_tbl' 
+            // Update 'is_stock' column to 1 for selected items 
+            Item::whereIn('item_id', $itemIds)->update(['is_stock' => 1]); 
+ 
+            return response()->json(['success' => true]); 
+        } else { 
+            return response()->json(['success' => false, 'message' => 'No items selected.']); 
+        } 
+    }
 
-    //     if (!empty($itemIds)) {
-    //         Item::whereIn('item_id', $itemIds)->update(['is_stock' => 1]);
-    //         return response()->json(['success' => true]);
-    //     } else {
-    //         return response()->json(['success' => false, 'message' => 'No items selected.']);
-    //     }
-    // }
+    public function updateItemsProperty(Request $request) 
+    { 
+        $itemIds = $request->input('item_ids', []); 
+ 
+        if (!empty($itemIds)) { 
+            // Update 'is_property' column to 1 for selected items 
+            Item::whereIn('item_id', $itemIds)->update(['is_property' => 1]); 
+ 
+            return response()->json(['success' => true]); 
+        } else { 
+            return response()->json(['success' => false, 'message' => 'No items selected.']); 
+        } 
+    }
 
-    /**
-     * Insert a new category into the database.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    public function updateItemsWMR(Request $request) 
+    { 
+        $itemIds = $request->input('item_ids', []); 
+ 
+        if (!empty($itemIds)) { 
+            // Update 'is_wmr' column to 1 for selected items 
+            Item::whereIn('item_id', $itemIds)->update(['is_wmr' => 1]); 
+ 
+            return response()->json(['success' => true]); 
+        } else { 
+            return response()->json(['success' => false, 'message' => 'No items selected.']); 
+        } 
+    }
+
+
     public function insertcateg(Request $request)
     {
         $validatedData = $request->validate([

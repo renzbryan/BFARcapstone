@@ -27,14 +27,9 @@ class IarController extends Controller
         return view('admin.iar.view-iar', compact('iars'));
     }
 
-    /**
-     * Show the form for creating a new IAR.
-     *
-     * @return \Illuminate\View\View
-     */
     public function create()
     {
-        $iar = new Iar();
+        $iar= new Iar();
         $iars = Iar::get();
         $model = new BfarOffice();
         $officeOptions = $model->getOptions();
@@ -42,15 +37,8 @@ class IarController extends Controller
 
         // Generate the IAR number
         $iarNumber = 'IAR-' . str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
-        return view('admin.iar.create-iar', compact('iars', 'officeOptions', 'iarNumber'));
+        return view('admin.iar.create-iar', compact('iars', 'officeOptions','iarNumber'));
     }
-
-    /**
-     * Get the office code for a given office ID.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function getOfficeCode($id)
     {
         $model = new BfarOffice();
@@ -103,18 +91,14 @@ class IarController extends Controller
 
         return redirect('iar')->with('success', 'SUCCESSFULLY ADDED');
     }
+    
 
-    /**
-     * Download the Excel file for a specific IAR.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function downloadExcel($id)
     {
-        $rowID = Iar::find($id);
-        $export = new ExportExc($rowID->iar_id);
-        return $export->export();
+            $rowID = Iar::find($id);
+            $export = new ExportExc($rowID->iar_id);
+            return $export->export();
     }
 
     /**
@@ -135,15 +119,25 @@ class IarController extends Controller
      */
     public function updateExcel(Request $request)
     {
-        $filePath = storage_path('app/IAR.xlsx');
+        $selectedFile = $request->input('excel_file');
+        $filePaths = [
+            'iar' => storage_path('app/IAR.xlsx'),
+            'another_excel' => storage_path('app/Another_Excel.xlsx'),
+            'yet_another_excel' => storage_path('app/Yet_Another_Excel.xlsx'),
+        ];
+        if (!array_key_exists($selectedFile, $filePaths)) {
+            return redirect()->back()->with('error', 'Invalid file selected.');
+        }
+    
+        $filePath = $filePaths[$selectedFile];
         $spreadsheet = IOFactory::load($filePath);
         $updatedValue = strtoupper($request->input('updated_value'));
         $spreadsheet->getActiveSheet()->setCellValue('G51', $updatedValue);
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save($filePath);
-
         return redirect()->route('setting.index')->with('success', 'IAR excel file edited successfully!');
     }
+    
 
     /**
      * Delete a specific IAR and its related items.
